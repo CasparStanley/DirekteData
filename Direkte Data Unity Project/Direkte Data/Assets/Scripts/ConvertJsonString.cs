@@ -5,7 +5,7 @@ using SimpleJSON;
 using UnityEngine.Networking;
 using TMPro;
 
-public class ReadGoogleSheet : MonoBehaviour
+public class ConvertJsonString : MonoBehaviour
 {
     private static string[] HEADERS = { "gsx$time", "gsx$speed", "gsx$rotation" };
     private static string DT = "$t";
@@ -30,15 +30,18 @@ public class ReadGoogleSheet : MonoBehaviour
 
     public void UpdateData()
     {
-        StartCoroutine(GetSheetData());
+        StartCoroutine(GetData());
     }
 
-    private IEnumerator GetSheetData()
+    private IEnumerator GetData()
     {
-        UnityWebRequest WWW = UnityWebRequest.Get("https://sheets.googleapis.com/v4/spreadsheets/1S5rv8UxE3qOs297lNIvUKe8RNZalGx60yaN46uf8SJ0/values/DD1?key=AIzaSyDhRVF_qWYqCmrbxn4CaphPOimnmzkYD5c");
+        // Request the JSON file from the website
+        UnityWebRequest WWW = UnityWebRequest.Get("");
 
+        // Wait for the request to return
         yield return WWW.SendWebRequest();
 
+        // Unless there's an error we are good to proceed!
         if (WWW.isNetworkError || WWW.isHttpError)
         {
             Debug.LogError("Web Request Error: " + WWW.error);
@@ -46,18 +49,23 @@ public class ReadGoogleSheet : MonoBehaviour
         else
         {
             string updateText = "";
+
+            // Converts the raw bytes to a string
             string file = WWW.downloadHandler.text;
+            // Parse the downloaded file to an object
             var result = JSON.Parse(file);
 
-            // Digs into feed, and then into entry
+            // Digs into feed, and then into entry to get the list of items - the columns
             foreach (var item in result["feed"]["entry"])
             {
+                // Parse each column to an object
                 var itemObject = JSON.Parse(item.ToString());
 
                 // Building the actual string to display
                 updateText += $"{itemObject[0][HEADERS[0]][DT]} | {itemObject[0][HEADERS[1]][DT]} | {itemObject[0][HEADERS[2]][DT]}\n";
             }
 
+            // Update the text shown on screen
             _contentText.text = updateText;
         }
     }
