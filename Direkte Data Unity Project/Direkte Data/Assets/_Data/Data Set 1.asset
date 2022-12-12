@@ -33,46 +33,46 @@ MonoBehaviour:
       Rotation: {x: 6, y: 5, z: 0}
     - Time: 6
       Speed: 10
-      Rotation: {x: 3, y: -5, z: 0}
+      Rotation: {x: 3, y: -5, z: -5}
     - Time: 7
       Speed: 10
-      Rotation: {x: 0, y: 5, z: 0}
+      Rotation: {x: 0, y: 5, z: 5}
     - Time: 8
       Speed: 10
       Rotation: {x: 0, y: -5, z: 0}
     - Time: 9
       Speed: 10
-      Rotation: {x: -3, y: 5, z: 0}
+      Rotation: {x: -3, y: 5, z: 5}
     - Time: 10
       Speed: 10
-      Rotation: {x: -6, y: -5, z: 0}
+      Rotation: {x: -6, y: 0, z: -5}
     - Time: 11
       Speed: 10
-      Rotation: {x: -9, y: 5, z: 0}
+      Rotation: {x: -9, y: 0, z: 5}
     - Time: 12
       Speed: 10
-      Rotation: {x: -6, y: -5, z: 0}
+      Rotation: {x: -6, y: 0, z: -5}
     - Time: 13
       Speed: 10
-      Rotation: {x: -3, y: 5, z: 0}
+      Rotation: {x: -3, y: 0, z: 5}
     - Time: 14
       Speed: 10
-      Rotation: {x: 0, y: -5, z: 0}
+      Rotation: {x: 0, y: 0, z: -5}
     - Time: 15
       Speed: 10
-      Rotation: {x: 0, y: 5, z: 0}
+      Rotation: {x: 0, y: 0, z: 5}
     - Time: 16
       Speed: 10
-      Rotation: {x: 3, y: -5, z: 0}
+      Rotation: {x: 3, y: 0, z: -5}
     - Time: 17
       Speed: 10
-      Rotation: {x: 6, y: 5, z: 0}
+      Rotation: {x: 6, y: 0, z: 5}
     - Time: 18
       Speed: 10
-      Rotation: {x: 9, y: -5, z: 0}
+      Rotation: {x: 9, y: 0, z: -5}
     - Time: 19
       Speed: 10
-      Rotation: {x: 6, y: 5, z: 0}
+      Rotation: {x: 6, y: 0, z: 5}
     - Time: 20
       Speed: 10
-      Rotation: {x: 3, y: -5, z: 0}
+      Rotation: {x: 3, y: 0, z: -5}

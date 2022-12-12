@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Place the script in the Direkte Data group in the component menu
+[AddComponentMenu("DirekteData/Object Mover")]
 public class DirekteDataObjectMover : MonoBehaviour
 {
     [SerializeField] private DirekteDataSaver dataSaver;

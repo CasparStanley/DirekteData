@@ -7,6 +7,8 @@ using TMPro;
 using System.Data;
 using UnityEngine.Events;
 
+// Place the script in the Direkte Data group in the component menu
+[AddComponentMenu("DirekteData/JSON Loader")]
 public class DirekteDataGetJsonData : MonoBehaviour
 {
     private static string[] HEADERS = { "time", "speed", "rotation" };

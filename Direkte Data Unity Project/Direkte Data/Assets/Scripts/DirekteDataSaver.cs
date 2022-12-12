@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
+// Place the script in the Direkte Data group in the component menu
+[AddComponentMenu("DirekteData/Local Unity Data Saver")]
 public class DirekteDataSaver : MonoBehaviour
 {
     private static char[] charSep = { ',' };
