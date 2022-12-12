@@ -4,6 +4,7 @@ using UnityEngine;
 using SimpleJSON;
 using UnityEngine.Networking;
 using TMPro;
+using System.Data;
 
 public class DirekteDataGetJsonData : MonoBehaviour
 {
@@ -36,10 +37,6 @@ public class DirekteDataGetJsonData : MonoBehaviour
 
     private IEnumerator GetData()
     {
-        // The variables we need
-        int time, speed;
-        string rotation;
-
         // Request the JSON file from the website
         UnityWebRequest WWW = UnityWebRequest.Get("https://direktedatarest2022.azurewebsites.net/api/DirekteData");
 
@@ -68,13 +65,13 @@ public class DirekteDataGetJsonData : MonoBehaviour
 
                 // Building the actual string to display
                 updateText += $"{HEADERS[0]}: {itemObject[0][HEADERS[0]]} | {HEADERS[1]}: {itemObject[0][HEADERS[1]]} | {HEADERS[2]}: {itemObject[0][HEADERS[2]]}\n";
+
+                // Save to the current dataset
+                _dataSaver.SaveDataSet(itemObject[0][HEADERS[0]], itemObject[0][HEADERS[1]], itemObject[0][HEADERS[2]]);
             }
 
             // Update the text shown on screen
             _contentText.text = updateText;
-
-            // We need to decide whether or not to create a new dataset or add to an existing dataset.
-            //_dataSaver.SaveDirekteData(itemObject[0][HEADERS[0], );
         }
     }
 }
