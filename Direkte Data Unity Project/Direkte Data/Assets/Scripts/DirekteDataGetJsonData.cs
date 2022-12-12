@@ -5,10 +5,11 @@ using SimpleJSON;
 using UnityEngine.Networking;
 using TMPro;
 
-public class ConvertJsonString : MonoBehaviour
+public class DirekteDataGetJsonData : MonoBehaviour
 {
-    private static string[] HEADERS = { "gsx$time", "gsx$speed", "gsx$rotation" };
-    private static string DT = "$t";
+    private static string[] HEADERS = { "time", "speed", "rotation" };
+
+    [SerializeField] private DirekteDataSaveJsonData _dataSaver;
 
     [SerializeField] private TMP_Text _contentText;
 
@@ -35,8 +36,12 @@ public class ConvertJsonString : MonoBehaviour
 
     private IEnumerator GetData()
     {
+        // The variables we need
+        int time, speed;
+        string rotation;
+
         // Request the JSON file from the website
-        UnityWebRequest WWW = UnityWebRequest.Get("");
+        UnityWebRequest WWW = UnityWebRequest.Get("https://direktedatarest2022.azurewebsites.net/api/DirekteData");
 
         // Wait for the request to return
         yield return WWW.SendWebRequest();
@@ -55,18 +60,21 @@ public class ConvertJsonString : MonoBehaviour
             // Parse the downloaded file to an object
             var result = JSON.Parse(file);
 
-            // Digs into feed, and then into entry to get the list of items - the columns
-            foreach (var item in result["feed"]["entry"])
+            // Digs into each object
+            foreach (var item in result)
             {
                 // Parse each column to an object
                 var itemObject = JSON.Parse(item.ToString());
 
                 // Building the actual string to display
-                updateText += $"{itemObject[0][HEADERS[0]][DT]} | {itemObject[0][HEADERS[1]][DT]} | {itemObject[0][HEADERS[2]][DT]}\n";
+                updateText += $"{HEADERS[0]}: {itemObject[0][HEADERS[0]]} | {HEADERS[1]}: {itemObject[0][HEADERS[1]]} | {HEADERS[2]}: {itemObject[0][HEADERS[2]]}\n";
             }
 
             // Update the text shown on screen
             _contentText.text = updateText;
+
+            // We need to decide whether or not to create a new dataset or add to an existing dataset.
+            //_dataSaver.SaveDirekteData(itemObject[0][HEADERS[0], );
         }
     }
 }

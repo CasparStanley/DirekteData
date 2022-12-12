@@ -6,14 +6,14 @@ namespace ModelLib
     {
         public int Time { get; set; }
         public int Speed { get; set; }
-        public Vector3 Rotation { get; set; }
+        public string Rotation { get; set; }
 
         public DataStructure()
         {
 
         }
 
-        public DataStructure(int time, int speed, Vector3 rotation)
+        public DataStructure(int time, int speed, string rotation)
         {
             Time = time;
             Speed = speed;
