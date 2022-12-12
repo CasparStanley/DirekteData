@@ -5,16 +5,19 @@ using SimpleJSON;
 using UnityEngine.Networking;
 using TMPro;
 using System.Data;
+using UnityEngine.Events;
 
 public class DirekteDataGetJsonData : MonoBehaviour
 {
     private static string[] HEADERS = { "time", "speed", "rotation" };
 
-    [SerializeField] private DirekteDataSaveJsonData _dataSaver;
-
+    [SerializeField] private DirekteDataSaver _dataSaver;
     [SerializeField] private TMP_Text _contentText;
-
     [SerializeField] private bool _updateRealtime;
+
+    [Space(10)]
+
+    public UnityEvent OnDataLoaded;
 
     private void Start()
     {
@@ -67,11 +70,14 @@ public class DirekteDataGetJsonData : MonoBehaviour
                 updateText += $"{HEADERS[0]}: {itemObject[0][HEADERS[0]]} | {HEADERS[1]}: {itemObject[0][HEADERS[1]]} | {HEADERS[2]}: {itemObject[0][HEADERS[2]]}\n";
 
                 // Save to the current dataset
-                _dataSaver.SaveDataSet(itemObject[0][HEADERS[0]], itemObject[0][HEADERS[1]], itemObject[0][HEADERS[2]]);
+                _dataSaver.SaveToNewLocalDataSet(DataLevel.MockJSON, itemObject[0][HEADERS[0]], itemObject[0][HEADERS[1]], itemObject[0][HEADERS[2]]);
             }
 
             // Update the text shown on screen
             _contentText.text = updateText;
+
+            // Trigger any methods that are waiting for the data to be loaded
+            OnDataLoaded?.Invoke();
         }
     }
 }

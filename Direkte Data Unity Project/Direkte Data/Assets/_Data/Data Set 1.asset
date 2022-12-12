@@ -15,8 +15,64 @@ MonoBehaviour:
   DataSets:
     name: Caspars Data
     description: This is some test data from a scriptable object
-    id: 99
     Data:
-    - Time: 99
-      Speed: 99
-      Rotation: {x: 9, y: 9, z: 9}
+    - Time: 1
+      Speed: 1
+      Rotation: {x: 0, y: 5, z: 0}
+    - Time: 2
+      Speed: 2
+      Rotation: {x: 3, y: -5, z: 0}
+    - Time: 3
+      Speed: 3
+      Rotation: {x: 6, y: 5, z: 0}
+    - Time: 4
+      Speed: 5
+      Rotation: {x: 9, y: -5, z: 0}
+    - Time: 5
+      Speed: 10
+      Rotation: {x: 6, y: 5, z: 0}
+    - Time: 6
+      Speed: 10
+      Rotation: {x: 3, y: -5, z: 0}
+    - Time: 7
+      Speed: 10
+      Rotation: {x: 0, y: 5, z: 0}
+    - Time: 8
+      Speed: 10
+      Rotation: {x: 0, y: -5, z: 0}
+    - Time: 9
+      Speed: 10
+      Rotation: {x: -3, y: 5, z: 0}
+    - Time: 10
+      Speed: 10
+      Rotation: {x: -6, y: -5, z: 0}
+    - Time: 11
+      Speed: 10
+      Rotation: {x: -9, y: 5, z: 0}
+    - Time: 12
+      Speed: 10
+      Rotation: {x: -6, y: -5, z: 0}
+    - Time: 13
+      Speed: 10
+      Rotation: {x: -3, y: 5, z: 0}
+    - Time: 14
+      Speed: 10
+      Rotation: {x: 0, y: -5, z: 0}
+    - Time: 15
+      Speed: 10
+      Rotation: {x: 0, y: 5, z: 0}
+    - Time: 16
+      Speed: 10
+      Rotation: {x: 3, y: -5, z: 0}
+    - Time: 17
+      Speed: 10
+      Rotation: {x: 6, y: 5, z: 0}
+    - Time: 18
+      Speed: 10
+      Rotation: {x: 9, y: -5, z: 0}
+    - Time: 19
+      Speed: 10
+      Rotation: {x: 6, y: 5, z: 0}
+    - Time: 20
+      Speed: 10
+      Rotation: {x: 3, y: -5, z: 0}
