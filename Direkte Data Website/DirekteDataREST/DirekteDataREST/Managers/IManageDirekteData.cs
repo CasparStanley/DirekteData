@@ -4,11 +4,13 @@ namespace DirekteDataREST.Managers
 {
     public interface IManageDirekteData
     {
-        IEnumerable<DataStructure> GetAll();
-        void Update(DataStructure data);
-        DataStructure GetById(int id);
-        void AddSubject(DataStructure data);
-        void ReplaceList();
+        void AddData(DataStructure data);
         public void DeleteItem(int id);
+        IEnumerable<DataStructure> GetAll();
+        DataStructure GetById(int id);
+        void ReplaceList();
+        void Update(DataStructure data);
+
+        void GenerateFakeSensorData();
     }
 }

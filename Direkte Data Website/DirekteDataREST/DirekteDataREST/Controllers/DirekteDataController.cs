@@ -14,7 +14,8 @@ namespace DirekteDataREST.Controllers
         // This would be where you would load the database context in for the mgr instead of creating a new one
         public DirekteDataController()
         {
-            mgr = new ManageDirekteData();
+            mgr = ManageDirekteData.Instance;
+            //mgr.GenerateFakeSensorData();
         }
 
         [HttpGet]
@@ -34,6 +35,7 @@ namespace DirekteDataREST.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         // GET: DirekteDataController/Details/5
         public ActionResult GetData(int id)
@@ -46,67 +48,52 @@ namespace DirekteDataREST.Controllers
             return Ok(data);
         }
 
-        // GET: DirekteDataController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: DirekteDataController/Create
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: DirekteDataController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(GetAll));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: DirekteDataController/Create
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create()
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(GetAll));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
-        // GET: DirekteDataController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        //// GET: DirekteDataController/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: DirekteDataController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(GetAll));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: DirekteDataController/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int id)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(GetAll));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
-        // GET: DirekteDataController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: DirekteDataController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(GetAll));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// GET: DirekteDataController/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
     }
 }
