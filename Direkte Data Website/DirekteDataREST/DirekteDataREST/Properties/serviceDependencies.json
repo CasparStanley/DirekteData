@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:Server=tcp:caspar-stanley-zealand-dbserver.database.windows.net"
+    },
+    "identityapp1": {
+      "type": "identityapp"
+    }
+  }
+}

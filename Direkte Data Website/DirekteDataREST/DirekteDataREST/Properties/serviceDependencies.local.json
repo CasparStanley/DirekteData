@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "mssql1": {
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/caspar-stanley-zealand-dbserver/databases/DirekteData-DB",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:Server=tcp:caspar-stanley-zealand-dbserver.database.windows.net"
+    },
+    "identityapp1": {
+      "type": "identityapp.default"
+    }
+  }
+}
