@@ -1,9 +1,16 @@
-﻿using System.Numerics;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 
 namespace ModelLib
 {
     public class DataStructure
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        public int Id { get; private set; }
+
+        public int Data_Set_ID { get; set; }
+
         // TODO: Make time a float
         public int Time { get; set; }
         public int Speed { get; set; }
@@ -14,11 +21,13 @@ namespace ModelLib
 
         }
 
-        public DataStructure(int time, int speed, string rotation)
+        public DataStructure(int time, int speed, string rotation, int dataSetID = 0)
         {
             Time = time;
             Speed = speed;
             Rotation = rotation;
+
+            Data_Set_ID = dataSetID;
         }
     }
 }

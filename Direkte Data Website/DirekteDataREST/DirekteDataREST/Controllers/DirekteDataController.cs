@@ -12,10 +12,17 @@ namespace DirekteDataREST.Controllers
         private readonly IManageDirekteData mgr;
 
         // This would be where you would load the database context in for the mgr instead of creating a new one
-        public DirekteDataController()
+        public DirekteDataController(DirekteDataContext context = null)
         {
-            mgr = ManageDirekteData.Instance;
-            //mgr.GenerateFakeSensorData();
+            // If no context, use the "mock"/offline manager
+            if (context == null)
+            {
+                mgr = ManageDirekteData.Instance;
+            }
+            else
+            {
+                mgr = new ManageDirekteDataDB(context);
+            }
         }
 
         [HttpGet]
