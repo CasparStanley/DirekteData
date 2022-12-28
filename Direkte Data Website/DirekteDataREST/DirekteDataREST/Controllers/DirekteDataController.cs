@@ -11,17 +11,19 @@ namespace DirekteDataREST.Controllers
     {
         private readonly IManageDirekteData mgr;
 
+        private bool useDB = false;
+
         // This would be where you would load the database context in for the mgr instead of creating a new one
         public DirekteDataController(DirekteDataContext context = null)
         {
             // If no context, use the "mock"/offline manager
-            if (context == null)
+            if (useDB && context != null)
             {
-                mgr = ManageDirekteData.Instance;
+                mgr = new ManageDirekteDataDB(context);
             }
             else
             {
-                mgr = new ManageDirekteDataDB(context);
+                mgr = ManageDirekteData.Instance;
             }
         }
 
