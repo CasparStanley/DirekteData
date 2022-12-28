@@ -54,7 +54,6 @@
                 </div>
 
                 <hr class="style1">
-                <br>
 
                 <div class="col-12 col-xl-12 pb-5">
                     <h4>Get Specific Data Set</h4>
@@ -64,13 +63,13 @@
                             <input required id="getDataId" type="number" class="form-control" v-model.number="idToGetBy" />
                         </div>
                         
-                        <div class="mx-2 w-100 d-flex justify-content-end">
-                            <button v-on:click="get(idToGetBy)" class="btn btn-success mt-auto"><b>Load</b></button>
+                        <div class="mx-2 w-100 d-flex justify-content-start">
+                            <button v-on:click="getData(idToGetBy)" class="btn btn-success mt-auto"><b>Load</b></button>
                         </div>
                     </div>
 
                     <table class="table table-borderless rounded-less">
-                        <thead>
+                        <thead v-if="dataStructure">
                             <tr>
                                 <th scope="col">Id</th>
                                 <th scope="col">Time</th>
@@ -78,19 +77,26 @@
                                 <th scope="col">Rotation</th>
                             </tr>
                         </thead>
-                        <tbody v-if="wineCooler">
+                        <thead v-else>
                             <tr>
-                                <th scope="row">{{data.id}}</th>
-                                <td>{{data.time}}</td>
-                                <td>{{data.speed}}</td>
-                                <td>{{data.rotation}}</td>
+                                <th scope="col"><span class="dot dot-error my-auto"></span> No data for this id</th>
+                            </tr>
+                        </thead>
+                        <tbody v-if="dataStructure">
+                            <tr>
+                                <th scope="row">{{dataStructure.id}}</th>
+                                <td>{{dataStructure.time}}</td>
+                                <td>{{dataStructure.speed}}</td>
+                                <td>{{dataStructure.rotation}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
+                            <tr>
+                                <th scope="row"></th>
                             </tr>
                         </tbody>
                       </table>
                 </div>
-
-                <hr class="style1">
-                <br>
             </div>
             </div>
 

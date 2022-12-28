@@ -4,9 +4,9 @@ Vue.createApp({
     data() {
         return {
             DirekteData: [],
-            dataStructure: {id: 0, time: 0, speed: 0, rotation: ""},
+            dataStructure: {id: null, time: null, speed: null, rotation: ""},
             idToGetBy: 0,
-            coolerToGet: 0,
+            dataToGet: 0,
             addData: {id: 0, time: 0, speed: 0, rotation: ""},
             addMessage: ""
         }
@@ -28,7 +28,8 @@ Vue.createApp({
                 this.dataStructure = await response.data;
             }
             catch (e) {
-                alert(e.message);
+                this.dataStructure = null;
+                // alert(e.message);
             }
         }
         // async add() {

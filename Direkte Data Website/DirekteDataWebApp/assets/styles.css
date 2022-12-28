@@ -109,6 +109,10 @@ table.table-bordered > thead {
     background-color: var(--stanley-creative-color);
 }
 
+.dot-error {
+    background-color: red;
+}
+
 .btn {
     color: var(--main-btnText-color) !important;
 }

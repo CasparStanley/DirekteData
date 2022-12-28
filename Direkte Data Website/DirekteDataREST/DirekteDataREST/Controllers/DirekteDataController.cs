@@ -30,7 +30,7 @@ namespace DirekteDataREST.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        // GET: DirekteDataController
+        // GET: DirekteData
         public ActionResult GetAll()
         {
             try
@@ -46,7 +46,7 @@ namespace DirekteDataREST.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        // GET: DirekteDataController/Details/5
+        // GET: DirekteData/0
         public ActionResult GetData(int id)
         {
             var data = mgr.GetById(id);
@@ -57,13 +57,13 @@ namespace DirekteDataREST.Controllers
             return Ok(data);
         }
 
-        //// GET: DirekteDataController/Create
+        //// GET: DirekteData/Create
         //public ActionResult Create()
         //{
         //    return View();
         //}
 
-        //// POST: DirekteDataController/Create
+        //// POST: DirekteData/Create
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult Create()
@@ -78,13 +78,13 @@ namespace DirekteDataREST.Controllers
         //    }
         //}
 
-        //// GET: DirekteDataController/Edit/5
+        //// GET: DirekteData/Edit/5
         //public ActionResult Edit(int id)
         //{
         //    return View();
         //}
 
-        //// POST: DirekteDataController/Edit/5
+        //// POST: DirekteData/Edit/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult Edit(int id)
@@ -99,7 +99,7 @@ namespace DirekteDataREST.Controllers
         //    }
         //}
 
-        //// GET: DirekteDataController/Delete/5
+        //// GET: DirekteData/Delete/5
         //public ActionResult Delete(int id)
         //{
         //    return View();

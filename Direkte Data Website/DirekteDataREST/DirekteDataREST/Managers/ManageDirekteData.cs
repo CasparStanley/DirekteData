@@ -24,7 +24,10 @@ namespace DirekteDataREST.Managers
 
         public void DeleteItem(int id)
         {
-            throw new NotImplementedException();
+            if (_mockRecordings[id] != null)
+            {
+                _mockRecordings.RemoveAt(id);
+            }
         }
 
         public IEnumerable<DataStructure> GetAll()
@@ -34,7 +37,7 @@ namespace DirekteDataREST.Managers
 
         public DataStructure GetById(int id)
         {
-            throw new NotImplementedException();
+            return _mockRecordings[id];
         }
 
         public void ReplaceList()
