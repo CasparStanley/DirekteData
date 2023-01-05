@@ -4,9 +4,9 @@ using UnityEngine;
 
 // Place the script in the Direkte Data group in the component menu
 [AddComponentMenu("DirekteData/Object Mover")]
-public class DirekteDataObjectMover : MonoBehaviour
+public class DirekteData_ObjectMover : MonoBehaviour
 {
-    [SerializeField] private DirekteDataSaver dataSaver;
+    [SerializeField] private Direkte_DataSaver dataSaver;
     [SerializeField] private DataLevel loadDataType;
 
     private List<int> timeDelays = new List<int>();
@@ -15,7 +15,7 @@ public class DirekteDataObjectMover : MonoBehaviour
 
     public void StartMoving()
     {
-        foreach (var data in dataSaver.GetDataSet(loadDataType).Data)
+        foreach (var data in dataSaver.GetDataSet(loadDataType).Recordings)
         {
             timeDelays.Add(data.Time);
             speeds.Add(data.Speed);
@@ -27,7 +27,7 @@ public class DirekteDataObjectMover : MonoBehaviour
 
     private IEnumerator ControlMovement()
     {
-        for (int i = 0; i < dataSaver.GetDataSet(loadDataType).Data.Count; i++)
+        for (int i = 0; i < dataSaver.GetDataSet(loadDataType).Recordings.Count; i++)
         {
             // Wait for the difference between the current "time" and the previous "time"
             if (i == 0)

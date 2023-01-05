@@ -6,15 +6,15 @@ using UnityEngine;
 
 // Place the script in the Direkte Data group in the component menu
 [AddComponentMenu("DirekteData/Local Unity Data Saver")]
-public class DirekteDataSaver : MonoBehaviour
+public class Direkte_DataSaver : MonoBehaviour
 {
     private static char[] charSep = { ',' };
 
-    public DataSetHolder _currentDataSet;
+    public DataSet CurrentDataSet;
 
     [SerializeField] private DirekteData_DataSO _direkteDataSO;
-    private DataSetHolder _direkteDataMockJSON= new DataSetHolder($"Mock JSON Data Set", "", new List<DataStructure>());
-    private DataSetHolder _direkteDataReal = new DataSetHolder($"Real Data Set", "", new List<DataStructure>());
+    private DataSet _direkteDataMockJSON= new DataSet($"Mock JSON Data Set", "", new List<DataStructure>());
+    private DataSet _direkteDataReal = new DataSet($"Real Data Set", "", new List<DataStructure>());
 
     /// <summary>
     /// Save to a new dataset, so we can have multiple datasets to select from
@@ -28,22 +28,22 @@ public class DirekteDataSaver : MonoBehaviour
         {
             case DataLevel.ScriptableObject:
                 {
-                    _currentDataSet = _direkteDataSO.DataSets;
+                    CurrentDataSet = _direkteDataSO.FakeRecordings;
                     break;
                 }
             case DataLevel.MockJSON:
                 {
-                    _currentDataSet = _direkteDataMockJSON;
+                    CurrentDataSet = _direkteDataMockJSON;
                     break;
                 }
             case DataLevel.Real:
                 {
-                    _currentDataSet = _direkteDataReal;
+                    CurrentDataSet = _direkteDataReal;
                     break;
                 }
             default:
                 {
-                    _currentDataSet = new DataSetHolder($"Failed Data Set", "There was an error in saving the dataset, so this was created instead", new List<DataStructure>());
+                    CurrentDataSet = new DataSet($"Failed Data Set", "There was an error in saving the dataset, so this was created instead", new List<DataStructure>());
                     break;
                 }
         }
@@ -60,7 +60,7 @@ public class DirekteDataSaver : MonoBehaviour
     public void SaveDataSet(int time, int speed, string rotation)
     {
         // Save to the current dataset - by calling GetDataSet() we make sure that if it doesn't exist, a new one is created and set as the current Dataset
-        SaveDirekteData(_currentDataSet, time, speed, rotation);
+        SaveDirekteData(CurrentDataSet, time, speed, rotation);
     }
 
     /// <summary>
@@ -73,21 +73,21 @@ public class DirekteDataSaver : MonoBehaviour
     {
         SwitchCurrentDataSet(type);
 
-        SaveDirekteData(_currentDataSet, time, speed, rotation);
+        SaveDirekteData(CurrentDataSet, time, speed, rotation);
     }
 
     /// <summary>
     /// Get the current dataset
     /// </summary>
     /// <returns>The current dataset</returns>
-    public DataSetHolder GetDataSet(DataLevel type)
+    public DataSet GetDataSet(DataLevel type)
     {
         SwitchCurrentDataSet(type);
 
-        return _currentDataSet;
+        return CurrentDataSet;
     }
 
-    private bool SaveDirekteData(DataSetHolder data, int time, int speed, string rotation)
+    private bool SaveDirekteData(DataSet data, int time, int speed, string rotation)
     {
         float rotX, rotY, rotZ;
         try
@@ -106,7 +106,7 @@ public class DirekteDataSaver : MonoBehaviour
         Vector3 newRot = new Vector3(rotX, rotY, rotZ);
 
         // Add the data to the selected dataset
-        data.Data.Add(new DataStructure(time, speed, newRot));
+        data.Recordings.Add(new DataStructure(time, speed, newRot));
 
         return true;
     }
@@ -117,28 +117,28 @@ public class DirekteDataSaver : MonoBehaviour
         {
             case DataLevel.ScriptableObject:
                 {
-                    _currentDataSet = _direkteDataSO.DataSets;
+                    CurrentDataSet = _direkteDataSO.FakeRecordings;
                     break;
                 }
             case DataLevel.MockJSON:
                 {
-                    _currentDataSet = _direkteDataMockJSON;
+                    CurrentDataSet = _direkteDataMockJSON;
                     break;
                 }
             case DataLevel.Real:
                 {
-                    _currentDataSet = _direkteDataReal;
+                    CurrentDataSet = _direkteDataReal;
                     break;
                 }
             default:
                 {
                     Debug.LogError("There was an error in the switching of the current data set type");
-                    _currentDataSet = _direkteDataSO.DataSets;
+                    CurrentDataSet = _direkteDataSO.FakeRecordings;
                     return false;
                 }
         }
 
-        if (_currentDataSet == null)
+        if (CurrentDataSet == null)
         {
             return false;
         }

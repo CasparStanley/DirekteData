@@ -11,5 +11,6 @@ namespace DirekteDataREST.Managers
         }
 
         public DbSet<DataStructure> Recordings { get; set; }
+        //public DbSet<DataSet> DataSets { get; set; }
     }
 }

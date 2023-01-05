@@ -9,7 +9,7 @@ namespace ModelLib
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
         public int Id { get; private set; }
 
-        public int Data_Set_ID { get; set; }
+        public int Data_Set_Id { get; set; }
 
         // TODO: Make time a float
         public int Time { get; set; }
@@ -27,7 +27,7 @@ namespace ModelLib
             Speed = speed;
             Rotation = rotation;
 
-            Data_Set_ID = dataSetID;
+            Data_Set_Id = dataSetID;
         }
     }
 }

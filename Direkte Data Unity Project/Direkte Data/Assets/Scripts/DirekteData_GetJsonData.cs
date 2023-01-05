@@ -9,11 +9,11 @@ using UnityEngine.Events;
 
 // Place the script in the Direkte Data group in the component menu
 [AddComponentMenu("DirekteData/JSON Loader")]
-public class DirekteDataGetJsonData : MonoBehaviour
+public class DirekteData_GetJsonData : MonoBehaviour
 {
     private static string[] HEADERS = { "time", "speed", "rotation" };
 
-    [SerializeField] private DirekteDataSaver _dataSaver;
+    [SerializeField] private Direkte_DataSaver _dataSaver;
     [SerializeField] private TMP_Text _contentText;
     [SerializeField] private bool _updateRealtime;
 

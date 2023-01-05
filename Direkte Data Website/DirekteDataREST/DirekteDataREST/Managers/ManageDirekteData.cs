@@ -40,11 +40,6 @@ namespace DirekteDataREST.Managers
             return _mockRecordings[id];
         }
 
-        public void ReplaceList()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Update(DataStructure data)
         {
             throw new NotImplementedException();
