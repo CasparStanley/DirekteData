@@ -11,7 +11,7 @@ using UnityEngine.Events;
 [AddComponentMenu("DirekteData/JSON Loader")]
 public class DirekteData_GetJsonData : MonoBehaviour
 {
-    private static string[] HEADERS = { "time", "speed", "rotation" };
+    private static string[] HEADERS = { "time", "rotation" };
 
     [SerializeField] private Direkte_DataSaver _dataSaver;
     [SerializeField] private TMP_Text _contentText;
@@ -28,7 +28,7 @@ public class DirekteData_GetJsonData : MonoBehaviour
 
     private void Update()
     {
-        // REALLY QUITE BAD ACTUALLY
+        // REALLY QUITE BAD ACTUALLY, maybe just update each time a new data recording is expected?
         if (_updateRealtime)
         {
             UpdateData();
@@ -59,20 +59,20 @@ public class DirekteData_GetJsonData : MonoBehaviour
 
             // Converts the raw bytes to a string
             string file = WWW.downloadHandler.text;
-            // Parse the downloaded file to an object
+            // Parse the downloaded file to a 'var'-object
             var result = JSON.Parse(file);
 
             // Digs into each object
             foreach (var item in result)
             {
-                // Parse each column to an object
+                // Parse each column to a new 'var'-object
                 var itemObject = JSON.Parse(item.ToString());
 
-                // Building the actual string to display
-                updateText += $"{HEADERS[0]}: {itemObject[0][HEADERS[0]]} | {HEADERS[1]}: {itemObject[0][HEADERS[1]]} | {HEADERS[2]}: {itemObject[0][HEADERS[2]]}\n";
+                // Building the actual string to display for debugging purposes
+                updateText += $"{HEADERS[0]}: {itemObject[0][HEADERS[0]]} | {HEADERS[1]}: {itemObject[0][HEADERS[1]]}\n";
 
                 // Save to the current dataset
-                _dataSaver.SaveToNewLocalDataSet(DataLevel.MockJSON, itemObject[0][HEADERS[0]], itemObject[0][HEADERS[1]], itemObject[0][HEADERS[2]]);
+                _dataSaver.SaveToNewLocalDataSet(DataLevel.MockJSON, itemObject[0][HEADERS[0]], itemObject[0][HEADERS[1]]);
             }
 
             // Update the text shown on screen

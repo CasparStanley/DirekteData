@@ -9,17 +9,15 @@ using UnityEngine;
 public class DataStructure
 {
     public int Time;
-    public int Speed;
     public Vector3 Rotation;
 
     public DataStructure()
     {
     }
 
-    public DataStructure(int time, int speed, Vector3 rotation)
+    public DataStructure(int time, Vector3 rotation)
     {
         Time = time;
-        Speed = speed;
         Rotation = rotation;
     }
 }

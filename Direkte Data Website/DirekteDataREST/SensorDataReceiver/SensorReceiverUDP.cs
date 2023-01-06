@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ModelLib;
 using System.Reflection.Metadata;
+using DirekteDataREST.Managers;
 
 namespace SensorDataReceiver
 {
@@ -19,6 +20,8 @@ namespace SensorDataReceiver
 
         public override void StartReceiver()
         {
+            IManageDirekteData mgr = ManageDirekteData.Instance;
+
             UdpClient client = new UdpClient(Port);
             IPEndPoint fromEP = new IPEndPoint(IPAddress.Loopback, Port);
 
@@ -37,6 +40,8 @@ namespace SensorDataReceiver
                 string rotation = $"{datapoints[1]},{datapoints[2]},{datapoints[3]}";
 
                 DataStructure dataObj = new DataStructure(time, rotation);
+
+                mgr.AddData(dataObj);
 
                 Console.WriteLine("Modtager: " + str);
             }

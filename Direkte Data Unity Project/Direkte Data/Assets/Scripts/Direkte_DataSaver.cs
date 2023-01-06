@@ -17,12 +17,14 @@ public class Direkte_DataSaver : MonoBehaviour
     private DataSet _direkteDataReal = new DataSet($"Real Data Set", "", new List<DataStructure>());
 
     /// <summary>
-    /// Save to a new dataset, so we can have multiple datasets to select from
+    /// Save to a new dataset, so we can have multiple types of datasets to select from
+    /// We can have a ScriptableObject type, which is a local dataset you can set up in Unity.
+    /// We can have a MockJSON which uses the mock data from the REST service
+    /// Finally, we can use the real data set from the sensor/database
     /// </summary>
     /// <param name="time"></param>
-    /// <param name="speed"></param>
     /// <param name="rotation"></param>
-    public void SaveToNewLocalDataSet(DataLevel type, int time, int speed, string rotation)
+    public void SaveToNewLocalDataSet(DataLevel type, int time, string rotation)
     {
         switch (type)
         {
@@ -48,32 +50,30 @@ public class Direkte_DataSaver : MonoBehaviour
                 }
         }
 
-        SaveDataSet(time, speed, rotation);
+        SaveDataSet(time, rotation);
     }
 
     /// <summary>
     /// Save to the current dataset
     /// </summary>
     /// <param name="time"></param>
-    /// <param name="speed"></param>
     /// <param name="rotation"></param>
-    public void SaveDataSet(int time, int speed, string rotation)
+    public void SaveDataSet(int time, string rotation)
     {
         // Save to the current dataset - by calling GetDataSet() we make sure that if it doesn't exist, a new one is created and set as the current Dataset
-        SaveDirekteData(CurrentDataSet, time, speed, rotation);
+        SaveDirekteData(CurrentDataSet, time, rotation);
     }
 
     /// <summary>
     /// Switch and then save the current dataset
     /// </summary>
     /// <param name="time"></param>
-    /// <param name="speed"></param>
     /// <param name="rotation"></param>
-    public void SaveDataSet(DataLevel type, int time, int speed, string rotation)
+    public void SaveDataSet(DataLevel type, int time, string rotation)
     {
         SwitchCurrentDataSet(type);
 
-        SaveDirekteData(CurrentDataSet, time, speed, rotation);
+        SaveDirekteData(CurrentDataSet, time, rotation);
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public class Direkte_DataSaver : MonoBehaviour
         return CurrentDataSet;
     }
 
-    private bool SaveDirekteData(DataSet data, int time, int speed, string rotation)
+    private bool SaveDirekteData(DataSet data, int time, string rotation)
     {
         float rotX, rotY, rotZ;
         try
@@ -106,7 +106,7 @@ public class Direkte_DataSaver : MonoBehaviour
         Vector3 newRot = new Vector3(rotX, rotY, rotZ);
 
         // Add the data to the selected dataset
-        data.Recordings.Add(new DataStructure(time, speed, newRot));
+        data.Recordings.Add(new DataStructure(time, newRot));
 
         return true;
     }

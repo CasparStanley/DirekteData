@@ -15,7 +15,7 @@ namespace ModelLib
         public int Time { get; set; }
         public string Rotation { get; set; }
 
-        public DataStructure() { }
+        public DataStructure() { Rotation = ""; }
 
         public DataStructure(int time, string rotation, int dataSetId = 0)
         {

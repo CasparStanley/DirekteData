@@ -10,7 +10,6 @@ public class DirekteData_ObjectMover : MonoBehaviour
     [SerializeField] private DataLevel loadDataType;
 
     private List<int> timeDelays = new List<int>();
-    private List<int> speeds = new List<int>();
     private List<Vector3> rotations = new List<Vector3>();
 
     public void StartMoving()
@@ -18,7 +17,6 @@ public class DirekteData_ObjectMover : MonoBehaviour
         foreach (var data in dataSaver.GetDataSet(loadDataType).Recordings)
         {
             timeDelays.Add(data.Time);
-            speeds.Add(data.Speed);
             rotations.Add(data.Rotation);
         }
 

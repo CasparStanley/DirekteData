@@ -17,6 +17,7 @@ public class DataSet
         Id = _currentId;
         Recordings = recordings;
 
+        // TODO: Bro this is handled by the database
         _currentId++;
     }
 }

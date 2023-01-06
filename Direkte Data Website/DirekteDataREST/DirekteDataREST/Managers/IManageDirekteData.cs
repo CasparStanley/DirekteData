@@ -4,6 +4,7 @@ namespace DirekteDataREST.Managers
 {
     public interface IManageDirekteData
     {
+        // TODO: Refactor AddData to write to a certain DataSet
         void AddData(DataStructure data);
         void DeleteItem(int id);
         IEnumerable<DataStructure> GetAll();

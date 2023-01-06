@@ -15,9 +15,9 @@ namespace ModelLib
         public string Name { get; private set; }
         public string Description { get; private set; }
 
-        public List<DataStructure> Recordings { get; set; }
+        public List<DataStructure> Recordings { get; set; } = new List<DataStructure> { };
 
-        public DataSet() { }
+        public DataSet() { Name = ""; Description = ""; }
 
         public DataSet(string name, string description, List<DataStructure> recordings)
         {
