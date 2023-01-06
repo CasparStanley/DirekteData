@@ -36,7 +36,7 @@ namespace SensorDataReceiver
                 // The next three numbers are the rotations on the axes
                 string rotation = $"{datapoints[1]},{datapoints[2]},{datapoints[3]}";
 
-                DataStructure dataObj = new DataStructure(time, 1, rotation);
+                DataStructure dataObj = new DataStructure(time, rotation);
 
                 Console.WriteLine("Modtager: " + str);
             }

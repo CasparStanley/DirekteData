@@ -38,7 +38,7 @@ namespace SensorDataReceiver
 
                 Console.WriteLine(fakeData);
 
-                DataStructure dataObj = new DataStructure(fakeTime, 1, fakeRotation);
+                DataStructure dataObj = new DataStructure(fakeTime, fakeRotation);
 
                 mgr.AddData(dataObj);
 

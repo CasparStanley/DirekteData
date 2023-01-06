@@ -4,10 +4,10 @@ Vue.createApp({
     data() {
         return {
             DirekteData: [],
-            dataStructure: {id: null, time: null, speed: null, rotation: ""},
+            dataStructure: {id: null, time: null, rotation: ""},
             idToGetBy: 0,
             dataToGet: 0,
-            addData: {id: 0, time: 0, speed: 0, rotation: ""},
+            addData: {id: 0, time: 0, rotation: ""},
             addMessage: ""
         }
     },

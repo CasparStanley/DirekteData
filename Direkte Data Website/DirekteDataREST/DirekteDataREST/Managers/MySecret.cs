@@ -2,6 +2,6 @@
 {
     public class MySecret
     {
-        public const string ConnectionString = "Server=tcp:caspar-stanley-zealand-dbserver.database.windows.net,1433;Initial Catalog=DirekteData-DB;Persist Security Info=False;User ID=casp876h@edu.zealand.dk;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Authentication=\"Active Directory Integrated\";";
+        public const string ConnectionString = "Server=tcp:caspar-stanley-zealand-dbserver.database.windows.net; Authentication=Active Directory Interactive; Encrypt=True; Database=DirekteData-DB; User Id=casp876h@edu.zealand.dk";
     }
 }
