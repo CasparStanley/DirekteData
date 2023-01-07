@@ -8,7 +8,7 @@ namespace ModelLib
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
         public int Id { get; private set; }
 
-        [ForeignKey("FK_DataSet_Recordings")]
+        [ForeignKey("FK_Recordings_DataSets")]
         public int DataSetId { get; set; }
 
         // TODO: Make time a float
@@ -23,6 +23,21 @@ namespace ModelLib
             Rotation = rotation;
 
             DataSetId = dataSetId;
+        }
+
+        public DataStructure(int id, int time, string rotation, int dataSetId = 0)
+        {
+            Id = id;
+
+            Time = time;
+            Rotation = rotation;
+
+            DataSetId = dataSetId;
+        }
+
+        public override string ToString()
+        {
+            return $"{{{nameof(Id)}={Id.ToString()}, {nameof(DataSetId)}={DataSetId.ToString()}, {nameof(Time)}={Time.ToString()}, {nameof(Rotation)}={Rotation}}}";
         }
     }
 }

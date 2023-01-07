@@ -11,7 +11,7 @@ using UnityEngine.Events;
 [AddComponentMenu("DirekteData/JSON Loader")]
 public class DirekteData_GetJsonData : MonoBehaviour
 {
-    private static string[] HEADERS = { "time", "rotation" };
+    private static string[] HEADERS = { "id", "dataSetId", "time", "rotation" };
 
     [SerializeField] private Direkte_DataSaver _dataSaver;
     [SerializeField] private TMP_Text _contentText;
@@ -69,10 +69,17 @@ public class DirekteData_GetJsonData : MonoBehaviour
                 var itemObject = JSON.Parse(item.ToString());
 
                 // Building the actual string to display for debugging purposes
-                updateText += $"{HEADERS[0]}: {itemObject[0][HEADERS[0]]} | {HEADERS[1]}: {itemObject[0][HEADERS[1]]}\n";
+                updateText += $"{HEADERS[0]}: {itemObject[0][HEADERS[0]]} | " +
+                              $"{HEADERS[1]}: {itemObject[0][HEADERS[1]]} | " +
+                              $"{HEADERS[2]}: {itemObject[0][HEADERS[2]]} | " +
+                              $"{HEADERS[3]}: {itemObject[0][HEADERS[3]]}\n";
 
                 // Save to the current dataset
-                _dataSaver.SaveToNewLocalDataSet(DataLevel.MockJSON, itemObject[0][HEADERS[0]], itemObject[0][HEADERS[1]]);
+                _dataSaver.SaveRecording(DataLevel.MockJSON, 
+                                        itemObject[0][HEADERS[0]], 
+                                        itemObject[0][HEADERS[1]], 
+                                        itemObject[0][HEADERS[2]], 
+                                        itemObject[0][HEADERS[3]]);
             }
 
             // Update the text shown on screen

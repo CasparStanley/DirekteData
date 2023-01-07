@@ -8,6 +8,8 @@ using UnityEngine;
 [System.Serializable]
 public class DataStructure
 {
+    public readonly int Id;
+    public int DataSetId;
     public int Time;
     public Vector3 Rotation;
 
@@ -15,8 +17,10 @@ public class DataStructure
     {
     }
 
-    public DataStructure(int time, Vector3 rotation)
+    public DataStructure(int id, int dataSetId, int time, Vector3 rotation)
     {
+        Id = id;
+        DataSetId = dataSetId;
         Time = time;
         Rotation = rotation;
     }

@@ -20,7 +20,7 @@ namespace SensorDataReceiver
 
         private bool running = true;
 
-        public override void StartReceiver()
+        public override async Task StartReceiver()
         {
             IManageDirekteData mgr = ManageDirekteData.Instance;
 

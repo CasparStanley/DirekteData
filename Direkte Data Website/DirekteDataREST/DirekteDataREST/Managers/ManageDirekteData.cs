@@ -17,9 +17,10 @@ namespace DirekteDataREST.Managers
             new DataStructure(3, "0,10,0"),
             new DataStructure(4, "0,15,0")
         };
-        public void AddData(DataStructure data)
+        public DataStructure AddData(DataStructure data)
         {
             _mockRecordings.Add(data);
+            return data;
         }
 
         public void DeleteItem(int id)
@@ -74,6 +75,11 @@ namespace DirekteDataREST.Managers
 
                 Thread.Sleep(updateFrequency * 1000);
             }
+        }
+
+        public override string ToString()
+        {
+            return $"Manage direkte data";
         }
     }
 }

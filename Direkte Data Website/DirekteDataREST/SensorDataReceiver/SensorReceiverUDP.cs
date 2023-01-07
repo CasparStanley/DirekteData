@@ -9,45 +9,69 @@ using System.Threading.Tasks;
 using ModelLib;
 using System.Reflection.Metadata;
 using DirekteDataREST.Managers;
+using SensorDataReceiver.Controllers;
+using System.Runtime.CompilerServices;
 
 namespace SensorDataReceiver
 {
     internal class SensorReceiverUDP : ReceiverStructure
     {
         public override int Port { get; set; } = 7001;
+        public bool Started = false;
+        public bool Running = true;
 
         private static char[] SPLITTERS = { ',' };
 
-        public override void StartReceiver()
+        public override async Task StartReceiver()
         {
-            IManageDirekteData mgr = ManageDirekteData.Instance;
+            // TODO: create a new DataSet to write to
 
-            UdpClient client = new UdpClient(Port);
+            UdpClient client = new UdpClient(7001);
             IPEndPoint fromEP = new IPEndPoint(IPAddress.Loopback, Port);
+            byte[] data;
 
-            // Modtage
-            try
+            Console.WriteLine("Client: " + client.ToString());
+            Console.WriteLine("IPEndPoint: " + IPAddress.Loopback);
+
+            while (Running)
             {
-                byte[] data = client.Receive(ref fromEP);
-                string str = Encoding.UTF8.GetString(data);
+                Thread.Sleep(1000);
+                // Modtag data
+                try
+                {
+                    Console.WriteLine("Attempting to receive some data from port: " + Port);
 
-                // Expected format is "0,0,0,0"
-                string[] datapoints = str.Split(SPLITTERS);
+                    data = client.Receive(ref fromEP);
 
-                // The first number is the time
-                int time = int.Parse(datapoints[0]);
-                // The next three numbers are the rotations on the axes
-                string rotation = $"{datapoints[1]},{datapoints[2]},{datapoints[3]}";
+                    Console.WriteLine("Data received: " + data);
 
-                DataStructure dataObj = new DataStructure(time, rotation);
+                    string str = Encoding.UTF8.GetString(data);
 
-                mgr.AddData(dataObj);
+                    Console.WriteLine("Data converted: " + str);
 
-                Console.WriteLine("Modtager: " + str);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine($"Data could not be converted, error: {ex}");
+                    // Ignore the message if it's just the Hello World! one :)
+                    if (str == "Hello World!")
+                    { continue; }
+
+                    // Expected format is "0,0,0,0"
+                    string[] datapoints = str.Split(SPLITTERS);
+
+                    // The first number is the time
+                    int time = int.Parse(datapoints[0]);
+                    // The next three numbers are the rotations on the axes
+                    string rotation = $"{datapoints[1]},{datapoints[2]},{datapoints[3]}";
+
+                    DataStructure newSensorRecording = new DataStructure(time, rotation, 1);
+
+                    // Send the data to the controller!
+                    await SensorController.AddSensorDataAsync(newSensorRecording);
+
+                    Console.WriteLine("Modtager: " + newSensorRecording.ToString());
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"Data could not be converted, error: {ex}");
+                }
             }
         }
     }

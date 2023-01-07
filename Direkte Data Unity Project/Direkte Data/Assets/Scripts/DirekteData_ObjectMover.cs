@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,8 +26,12 @@ public class DirekteData_ObjectMover : MonoBehaviour
 
     private IEnumerator ControlMovement()
     {
+        Debug.Log("Controlling movement... recordings: " + dataSaver.GetDataSet(loadDataType).Recordings.Count);
+
         for (int i = 0; i < dataSaver.GetDataSet(loadDataType).Recordings.Count; i++)
         {
+            Debug.Log(i + "/" + dataSaver.GetDataSet(loadDataType).Recordings.Count);
+
             // Wait for the difference between the current "time" and the previous "time"
             if (i == 0)
             {

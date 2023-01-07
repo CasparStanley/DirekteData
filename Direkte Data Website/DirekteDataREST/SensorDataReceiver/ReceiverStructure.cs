@@ -10,6 +10,6 @@ namespace SensorDataReceiver
     {
         public abstract int Port { get; set; }
 
-        public abstract void StartReceiver();
+        public abstract Task StartReceiver();
     }
 }

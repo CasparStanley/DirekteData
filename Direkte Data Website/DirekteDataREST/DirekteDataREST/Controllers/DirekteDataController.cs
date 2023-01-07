@@ -1,6 +1,10 @@
 ﻿using DirekteDataREST.Managers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ModelLib;
+using Newtonsoft.Json;
+using System.Text;
+using System.Text.Json;
 using System.Xml.Linq;
 
 namespace DirekteDataREST.Controllers
@@ -9,12 +13,13 @@ namespace DirekteDataREST.Controllers
     [Route("api/[controller]")]
     public class DirekteDataController : Controller
     {
+        private const string RESTURL = "https://direktedatarest2022.azurewebsites.net/api/DirekteData";
         private readonly IManageDirekteData mgr;
 
-        private bool useDB = false;
+        private bool useDB = true;
 
         // This would be where you would load the database context in for the mgr instead of creating a new one
-        public DirekteDataController(DirekteDataContext context = null)
+        public DirekteDataController(DirekteDataContext context)
         {
             // If no context, use the "mock"/offline manager
             if (useDB && context != null)
@@ -57,52 +62,38 @@ namespace DirekteDataREST.Controllers
             return Ok(data);
         }
 
-        //// GET: DirekteData/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        // POST api/<DirekteDataController>
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<DataStructure> Post(DataStructure newSensorRecording)
+        {
+            try
+            {
+                DataStructure recording = mgr.AddData(newSensorRecording);
+                return Created(RESTURL, recording);
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
-        //// POST: DirekteData/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create()
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(GetAll));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: DirekteData/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: DirekteData/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
+        // PUT: DirekteData/Edit/5
+        //[HttpPut("{id}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
         //public ActionResult Edit(int id)
         //{
         //    try
         //    {
-        //        return RedirectToAction(nameof(GetAll));
+        //        DataStructure recording = mgr.GetById(id);
+        //        return Ok(recording);
         //    }
-        //    catch
+        //    catch (KeyNotFoundException knfe)
         //    {
-        //        return View();
+        //        return NotFound(knfe);
         //    }
-        //}
-
-        //// GET: DirekteData/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
         //}
     }
 }
