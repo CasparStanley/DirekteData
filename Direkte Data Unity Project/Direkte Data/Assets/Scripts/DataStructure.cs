@@ -24,4 +24,9 @@ public class DataStructure
         Time = time;
         Rotation = rotation;
     }
+
+    public override string ToString()
+    {
+        return $"{{{nameof(Id)}={Id.ToString()}, {nameof(DataSetId)}={DataSetId.ToString()}, {nameof(Time)}={Time.ToString()}, {nameof(Rotation)}={Rotation}}}";
+    }
 }

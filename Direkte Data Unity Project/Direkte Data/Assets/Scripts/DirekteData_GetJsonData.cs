@@ -19,19 +19,26 @@ public class DirekteData_GetJsonData : MonoBehaviour
 
     [Space(10)]
 
+    public bool LoadFromDatabase = false;
+
+    [Space(10)]
+
     public UnityEvent OnDataLoaded;
 
-    private void Start()
-    {
-        UpdateData();
-    }
+    //private void Start()
+    //{
+    //    UpdateData();
+    //}
 
     private void Update()
     {
-        // REALLY QUITE BAD ACTUALLY, maybe just update each time a new data recording is expected?
-        if (_updateRealtime)
+        if (LoadFromDatabase)
         {
-            UpdateData();
+            // REALLY QUITE BAD ACTUALLY, maybe just update each time a new data recording is expected?
+            if (_updateRealtime)
+            {
+                UpdateData();
+            }
         }
     }
 
@@ -42,6 +49,8 @@ public class DirekteData_GetJsonData : MonoBehaviour
 
     private IEnumerator GetData()
     {
+        // TODO: Add functionality to get specific dataset ("/api/DirekteData/1" for eksempel)
+
         // Request the JSON file from the website
         UnityWebRequest WWW = UnityWebRequest.Get("https://direktedatarest2022.azurewebsites.net/api/DirekteData");
 

@@ -13,10 +13,10 @@ public class Direkte_DataSaver : MonoBehaviour
     public DataSet CurrentDataSet;
 
     [SerializeField] private DirekteData_DataSO _direkteDataSO;
-    private DataSet _direkteDataMockJSON= new DataSet(0, $"Mock JSON Data Set", "", new List<DataStructure>());
-    private DataSet _direkteDataReal;
+    private DataSet _direkteDataMockJSON = new DataSet(0, $"Mock JSON Data Set", "", new List<DataStructure>());
+    private DataSet _direkteDataReal = new DataSet(0, $"Direkte Data Set", "", new List<DataStructure>());
 
-    // TODO: Need a list of real datasets, to check if one exists with the Id or to create a new one.
+    // TODO: Make a _direkteData_Database which will be a loaded dataset from the database that you choose
 
     /// <summary>
     /// Save to a new dataset, so we can have multiple types of datasets to select from
@@ -26,33 +26,9 @@ public class Direkte_DataSaver : MonoBehaviour
     /// </summary>
     /// <param name="time"></param>
     /// <param name="rotation"></param>
-    public void ChooseDataSet(DataLevel type, int id, int dataSetId, int time, string rotation)
+    public void ChooseDataSet(DataLevel type)
     {
-        switch (type)
-        {
-            case DataLevel.ScriptableObject:
-                {
-                    CurrentDataSet = _direkteDataSO.FakeRecordings;
-                    break;
-                }
-            case DataLevel.MockJSON:
-                {
-                    CurrentDataSet = _direkteDataMockJSON;
-                    break;
-                }
-            case DataLevel.Real:
-                {
-                    CurrentDataSet = _direkteDataReal;
-                    break;
-                }
-            default:
-                {
-                    CurrentDataSet = new DataSet(-1, $"Failed Data Set", "There was an error in saving the dataset, so this was created instead", new List<DataStructure>());
-                    break;
-                }
-        }
-
-        SaveRecording(id, dataSetId, time, rotation);
+        SwitchCurrentDataSet(type);
     }
 
     /// <summary>
@@ -60,10 +36,10 @@ public class Direkte_DataSaver : MonoBehaviour
     /// </summary>
     /// <param name="time"></param>
     /// <param name="rotation"></param>
-    public void SaveRecording(int id, int dataSetId, int time, string rotation)
+    public void SaveRecording(int time, string rotation, int id = 0, int dataSetId = 0)
     {
         // Save to the current dataset - by calling GetDataSet() we make sure that if it doesn't exist, a new one is created and set as the current Dataset
-        ParseRecordingToDataSet(CurrentDataSet, id, dataSetId, time, rotation);
+        ParseRecordingToDataSet(CurrentDataSet, time, rotation, id, dataSetId);
     }
 
     /// <summary>
@@ -71,11 +47,11 @@ public class Direkte_DataSaver : MonoBehaviour
     /// </summary>
     /// <param name="time"></param>
     /// <param name="rotation"></param>
-    public void SaveRecording(DataLevel type, int id, int dataSetId, int time, string rotation)
+    public void SaveRecording(DataLevel type, int time, string rotation, int id = 0, int dataSetId = 0)
     {
         SwitchCurrentDataSet(type);
 
-        ParseRecordingToDataSet(CurrentDataSet, id, dataSetId, time, rotation);
+        ParseRecordingToDataSet(CurrentDataSet, time, rotation, id, dataSetId);
     }
 
     /// <summary>
@@ -89,7 +65,7 @@ public class Direkte_DataSaver : MonoBehaviour
         return CurrentDataSet;
     }
 
-    private bool ParseRecordingToDataSet(DataSet data, int id, int dataSetId, int time, string rotation)
+    private bool ParseRecordingToDataSet(DataSet data, int time, string rotation, int id = 0, int dataSetId = 0)
     {
         float rotX, rotY, rotZ;
         try
