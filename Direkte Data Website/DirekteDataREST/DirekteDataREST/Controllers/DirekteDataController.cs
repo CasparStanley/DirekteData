@@ -48,13 +48,27 @@ namespace DirekteDataREST.Controllers
             }
         }
 
+        [HttpGet("{dataSetId}/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        // GET: DirekteData/0
+        public ActionResult GetRecording(int dataSetId, int id)
+        {
+            var data = mgr.GetRecordingById(dataSetId, id);
+            if (data is null)
+            {
+                return NotFound();
+            }
+            return Ok(data);
+        }
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         // GET: DirekteData/0
-        public ActionResult GetData(int id)
+        public ActionResult GetDataSet(int id)
         {
-            var data = mgr.GetById(id);
+            var data = mgr.GetDataSetById(id);
             if (data is null)
             {
                 return NotFound();

@@ -36,19 +36,51 @@ namespace DirekteDataREST.Managers
             return _context.Recordings.ToList();
         }
 
-        public DataStructure GetById(int id)
+        public DataStructure GetRecordingById(int dataSetId, int id)
         {
-            if (_context.Recordings.ToList().Exists(i => i.Id == id))
+            // just make sure that any recordings exist within the given dataset
+            if (_context.Recordings.ToList().Exists(i => i.DataSetId == dataSetId))
             {
-                DataStructure? recordings = _context.Recordings.Find(id);
-                return recordings;
+                //  Get all the recordings in this dataset
+                List<DataStructure> recordingsInDataSet = _context.Recordings.Where(r => r.DataSetId == dataSetId).ToList();
+
+                // then make sure the recording with the Id exists in the selected dataset
+                if (recordingsInDataSet.Exists(i => i.Id == id))
+                {
+                    DataStructure? recording = recordingsInDataSet.Where(r => r.Id == id).ToList()[0];
+                    return recording;
+                }
+            }
+            throw new KeyNotFoundException();
+        }
+
+        public DataSet GetDataSetById(int id)
+        {
+            if (_context.DataSets.ToList().Exists(i => i.Id == id))
+            {
+                // Find the dataset in the database
+                DataSet? dataSet = _context.DataSets.Find(id);
+                
+                // Add all the recordings that should be in this dataset,
+                // since that doesn't come from the same table in the database
+                List<DataStructure> recordingsInDataSet = _context.Recordings.Where(r => r.DataSetId == id).ToList();
+                foreach (DataStructure recording in recordingsInDataSet)
+                {
+                    // Just double check that we didn't already add the recording
+                    if (!dataSet.Recordings.Contains(recording))
+                    {
+                        dataSet.Recordings.Add(recording);
+                    }
+                }
+
+                return dataSet;
             }
             throw new KeyNotFoundException();
         }
 
         public void Update(DataStructure data)
         {
-            DataStructure recording = GetById(data.Id);
+            DataStructure recording = GetRecordingById(data.DataSetId, data.Id);
             //_context.Entry(recording).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             _context.Recordings.Update(recording);
             _context.SaveChanges();

@@ -17,6 +17,11 @@ namespace DirekteDataREST.Managers
             new DataStructure(3, "0,10,0"),
             new DataStructure(4, "0,15,0")
         };
+
+        public ManageDirekteData()
+        {
+        }
+
         public DataStructure AddData(DataStructure data)
         {
             _mockRecordings.Add(data);
@@ -36,7 +41,12 @@ namespace DirekteDataREST.Managers
             return _mockRecordings;
         }
 
-        public DataStructure GetById(int id)
+        public DataSet GetDataSetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DataStructure GetRecordingById(int dataSetId, int id)
         {
             return _mockRecordings[id];
         }

@@ -8,7 +8,8 @@ namespace DirekteDataREST.Managers
         DataStructure AddData(DataStructure data);
         void DeleteItem(int id);
         IEnumerable<DataStructure> GetAll();
-        DataStructure GetById(int id);
+        DataStructure GetRecordingById(int dataSetId, int id);
+        DataSet GetDataSetById(int id);
         void Update(DataStructure data);
 
         void GenerateFakeSensorData();

@@ -75,7 +75,7 @@ public class DirekteData_GetJsonData : MonoBehaviour
                               $"{HEADERS[3]}: {itemObject[0][HEADERS[3]]}\n";
 
                 // Save to the current dataset
-                _dataSaver.SaveRecording(DataLevel.MockJSON, 
+                _dataSaver.SaveRecording(DataLevel.Real, 
                                         itemObject[0][HEADERS[0]], 
                                         itemObject[0][HEADERS[1]], 
                                         itemObject[0][HEADERS[2]], 
