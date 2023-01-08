@@ -6,6 +6,7 @@ using DirekteDataREST.Controllers;
 using DirekteDataREST.Managers;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace DirekteDataREST.SensorReceiver
 {
@@ -15,10 +16,10 @@ namespace DirekteDataREST.SensorReceiver
         private static readonly Lazy<SensorReceiverUDP> _instance = new Lazy<SensorReceiverUDP>(() => new SensorReceiverUDP());
         public static SensorReceiverUDP Instance { get { return _instance.Value; } }
 
-        // http://direktedatarest2022.azurewebsites.net/api/DirekteData
+        // https://direktedatarest2022.azurewebsites.net/api/DirekteData
         // http://localhost:5290/api/DirekteData
 
-        private const string RESTURL = "http://direktedatarest2022.azurewebsites.net/api/DirekteData";
+        private const string RESTURL = "https://direktedatarest2022.azurewebsites.net/api/DirekteData";
         private const string POST_RECORDING = "/AddRecording";
         private const string POST_DATASET = "/AddDataSet";
 
@@ -78,18 +79,11 @@ namespace DirekteDataREST.SensorReceiver
                     // Create the new recording object with the recorded values!
                     DataStructure newSensorRecording = new DataStructure(time, rotation, currentDataSetId);
 
-                    // Send the data to the manager!
-                    //mgr.AddRecording(newSensorRecording);
-
-                    using (var client = new HttpClient())
-                    {
-                        var response = await client.PostAsync(RESTURL + POST_RECORDING, 
-                            new StringContent(JsonConvert.SerializeObject(newSensorRecording), 
-                            Encoding.UTF8, 
-                            "application/json"));
-                    }
-
-                    Debug.WriteLine("Modtager: " + newSensorRecording.ToString());
+                    // Convert the Recording to a json and send it as an http post request to the controller
+                    var jsonDataSet = JsonConvert.SerializeObject(newSensorRecording);
+                    HttpResponseMessage response = await SendHttpPostRequest(jsonDataSet, POST_RECORDING);
+                    Debug.WriteLine("\n\n" + response + "\n\n");
+                    Debug.WriteLine("\n\n" + response.Content + "\n\n");
                 }
                 catch (Exception ex)
                 {
@@ -101,35 +95,53 @@ namespace DirekteDataREST.SensorReceiver
         private async void ReceiverStartup()
         {
             // Since this recording has just started, create a new DataSet that we can link these recordings to
-            string dataSetName = DateTime.Now.ToShortDateString();
+            string dataSetName = $"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}";
             string dataSetDesc = $"This DataSet was recorded on {DateTime.Now.ToShortDateString()} at {DateTime.Now.ToShortTimeString()}";
 
-            // This creates the new DataSet and once returned it sets the currentDataSetId int
-            // so we can add that to all future recordings
-            //currentDataSetId = mgr.AddDataSet().Id;
+            // Convert the DataSet to a json and send it as an http post request to the controller
+            var jsonDataSet = JsonConvert.SerializeObject(new DataSet(dataSetName, dataSetDesc, new List<DataStructure>()));
+            HttpResponseMessage response = await SendHttpPostRequest(jsonDataSet, POST_DATASET);
+            Debug.WriteLine("\n\n" + response + "\n\n");
+            Debug.WriteLine("\n\n" + response.Content.ReadAsStringAsync().Result + "\n\n");
 
-            using (var client = new HttpClient())
-            {
-                var jsonDataSet = JsonConvert.SerializeObject(new DataSet(dataSetName, dataSetDesc, new List<DataStructure>()));
-                StringContent content = new StringContent(jsonDataSet, Encoding.UTF8, "application/json");
+            DataSet createdDataSet = JsonConvert.DeserializeObject<DataSet>(response.Content.ReadAsStringAsync().Result);
+            currentDataSetId = GetDataSet(createdDataSet.Name).Id;
 
-                Debug.WriteLine("\nJSON\n" + jsonDataSet + "\n\n");
-
-                var response = await client.PostAsync(RESTURL + POST_DATASET, content);
-
-                Debug.WriteLine("\n\n" + response + "\n\n");
-                // TODO: Get the DataSet id from the response
-            }
+            Debug.WriteLine("\n\n" + createdDataSet.Name + "\n\n");
 
             Running = true;
 
-            client = new UdpClient(7001);
+            client = new UdpClient(Port);
             fromEP = new IPEndPoint(IPAddress.Loopback, Port);
 
             Debug.WriteLine("\n\nClient: " + client.ToString());
             Debug.WriteLine("IPEndPoint: " + IPAddress.Loopback);
             Debug.WriteLine("");
             Debug.WriteLine("");
+        }
+
+        private async Task<HttpResponseMessage> SendHttpPostRequest(string json, string postAttribute)
+        {
+            using (var client = new HttpClient())
+            {
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                Debug.WriteLine("\nJSON\n" + json + "\n\n");
+
+                return await client.PostAsync(RESTURL + postAttribute, content);
+            }
+        }
+
+        private async Task<HttpResponseMessage> GetDataSet(string name)
+        {
+            using (var client = new HttpClient())
+            {
+                string escapedString = Uri.EscapeDataString(name);
+
+                Debug.WriteLine($"\nSearching for DataSet with name: {name}\nEscaped string: {escapedString}\n\n");
+
+                return await client.GetAsync(RESTURL + "/search?Name=" + escapedString);
+            }
         }
     }
 }

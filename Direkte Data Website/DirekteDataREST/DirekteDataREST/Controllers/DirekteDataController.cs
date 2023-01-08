@@ -76,6 +76,21 @@ namespace DirekteDataREST.Controllers
             return Ok(data);
         }
 
+        [HttpGet]
+        [Route("search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        // GET: DirekteData/dataset1
+        public ActionResult GetDataSetByName([FromQuery] FilterDataSets filter)
+        {
+            var data = mgr.GetDataSetByName(filter);
+            if (data is null)
+            {
+                return NotFound();
+            }
+            return Ok(data);
+        }
+
         // POST api/DirekteData/AddRecording
         [HttpPost("AddRecording")]
         [ProducesResponseType(StatusCodes.Status201Created)]

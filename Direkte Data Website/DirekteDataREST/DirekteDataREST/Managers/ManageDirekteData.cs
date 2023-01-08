@@ -94,5 +94,10 @@ namespace DirekteDataREST.Managers
         {
             throw new NotImplementedException();
         }
+
+        public DataSet GetDataSetByName(FilterDataSets name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

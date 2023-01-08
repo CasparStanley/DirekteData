@@ -25,7 +25,7 @@ namespace SensorDataReceiver
 
         public override async Task StartReceiver()
         {
-            UdpClient client = new UdpClient(7001);
+            UdpClient client = new UdpClient(Port);
             IPEndPoint fromEP = new IPEndPoint(IPAddress.Loopback, Port);
             byte[] data;
 

@@ -61,6 +61,30 @@ namespace DirekteDataREST.Managers
             throw new KeyNotFoundException();
         }
 
+        public DataSet GetDataSetByName(FilterDataSets filter)
+        {
+            if (_context.DataSets.ToList().Exists(i => i.Name == filter.Name))
+            {
+                // Find the dataset in the database
+                DataSet? dataSet = _context.DataSets.ToList().Where(ds => ds.Name == filter.Name).ToList()[0];
+
+                // Add all the recordings that should be in this dataset,
+                // since that doesn't come from the same table in the database
+                List<DataStructure> recordingsInDataSet = _context.Recordings.Where(r => r.DataSetId == dataSet.Id).ToList();
+                foreach (DataStructure recording in recordingsInDataSet)
+                {
+                    // Just double check that we didn't already add the recording
+                    if (!dataSet.Recordings.Contains(recording))
+                    {
+                        dataSet.Recordings.Add(recording);
+                    }
+                }
+
+                return dataSet;
+            }
+            throw new KeyNotFoundException();
+        }
+
         public DataStructure AddRecording(DataStructure recording)
         {
             Debug.WriteLine("The AddRecording method has been called from the UDP receiver with data: " + recording.ToString());

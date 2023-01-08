@@ -8,6 +8,7 @@ namespace DirekteDataREST.Managers
         IEnumerable<DataStructure> GetAll();
         DataStructure GetRecordingById(int dataSetId, int id);
         DataSet GetDataSetById(int id);
+        DataSet GetDataSetByName(FilterDataSets name);
         DataStructure AddRecording(DataStructure data);
         DataSet AddDataSet(DataSet newDataSet);
         void Update(DataStructure data);
