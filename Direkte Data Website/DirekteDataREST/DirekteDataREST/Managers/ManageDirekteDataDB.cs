@@ -13,6 +13,12 @@ namespace DirekteDataREST.Managers
         {
             _context = context;
         }
+
+        public DataStructure GetLive()
+        {
+            return LiveDataHolder.Recording;
+        }
+
         public IEnumerable<DataStructure> GetAll()
         {
             StartSensorReceiver();
@@ -87,7 +93,10 @@ namespace DirekteDataREST.Managers
 
         public DataStructure AddRecording(DataStructure recording)
         {
-            Debug.WriteLine("The AddRecording method has been called from the UDP receiver with data: " + recording.ToString());
+            if (recording != null)
+            {
+                LiveDataHolder.Recording = recording;
+            }
 
             _context.Recordings.Add(recording);
             _context.SaveChanges();

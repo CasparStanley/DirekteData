@@ -99,5 +99,10 @@ namespace DirekteDataREST.Managers
         {
             throw new NotImplementedException();
         }
+
+        public DataStructure GetLive()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

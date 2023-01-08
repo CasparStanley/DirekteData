@@ -1315,7 +1315,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1390856375}
   - component: {fileID: 1390856376}
-  - component: {fileID: 1390856377}
   m_Layer: 0
   m_Name: UDP_Receiver
   m_TagString: Untagged
@@ -1344,7 +1343,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390856374}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca9d1b35b6b890c4ba59aef294cc35c6, type: 3}
   m_Name: 
@@ -1352,21 +1351,6 @@ MonoBehaviour:
   DoDebug: 0
   Running: 0
   dataSaver: {fileID: 1870156022}
---- !u!114 &1390856377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1390856374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 168d562c432f0f84da6c125226479fc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  port: 7001
-  lastReceivedUDPPacket: 
-  allReceivedUDPPackets: 
 --- !u!1 &1618698044
 GameObject:
   m_ObjectHideFlags: 0

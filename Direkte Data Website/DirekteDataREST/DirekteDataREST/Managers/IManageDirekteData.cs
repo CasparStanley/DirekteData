@@ -5,6 +5,7 @@ namespace DirekteDataREST.Managers
     public interface IManageDirekteData
     {
         // TODO: Refactor AddData to write to a certain DataSet
+        DataStructure GetLive();
         IEnumerable<DataStructure> GetAll();
         DataStructure GetRecordingById(int dataSetId, int id);
         DataSet GetDataSetById(int id);

@@ -13,6 +13,9 @@ namespace DirekteDataREST.Controllers
     [Route("api/[controller]")]
     public class DirekteDataController : Controller
     {
+        // https://direktedatarest2022.azurewebsites.net/api/DirekteData
+        // http://localhost:5290/api/DirekteData
+
         private const string RESTURL = "https://direktedatarest2022.azurewebsites.net/api/DirekteData";
         private readonly IManageDirekteData mgr;
 
@@ -29,6 +32,22 @@ namespace DirekteDataREST.Controllers
             else
             {
                 mgr = ManageDirekteData.Instance;
+            }
+        }
+
+        [HttpGet("live")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        // GET: DirekteData/live
+        public ActionResult GetLive()
+        {
+            try
+            {
+                return Ok(mgr.GetLive());
+            }
+            catch
+            {
+                return NotFound();
             }
         }
 

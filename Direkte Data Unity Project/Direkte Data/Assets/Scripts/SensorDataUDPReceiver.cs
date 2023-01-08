@@ -21,7 +21,7 @@ public class SensorDataUDPReceiver : MonoBehaviour
     private readonly Queue<string> incomingQueue = new Queue<string>();
     static readonly object lockObject = new object();
 
-    private int _port = 7001;
+    private int _port = 7002;
     private IPEndPoint fromEP;
     private UdpClient _client;
 

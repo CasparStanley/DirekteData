@@ -49,6 +49,7 @@ public class Direkte_DataSaver : MonoBehaviour
     /// <param name="rotation"></param>
     public void SaveRecording(DataLevel type, int time, string rotation, int id = 0, int dataSetId = 0)
     {
+        Debug.Log($"DataSaver saving recording: Time={time}, Rotation={rotation}");
         SwitchCurrentDataSet(type);
 
         ParseRecordingToDataSet(CurrentDataSet, time, rotation, id, dataSetId);
