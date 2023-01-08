@@ -19,11 +19,9 @@ namespace SensorDataReceiver.Controllers
 
         public static async Task AddSensorDataAsync(DataStructure newSensorRecording)
         {
-            DataStructure testRecording = new DataStructure(60, 1, "90,80,70", 2);
-
             using (var client = new HttpClient())
             {
-                var response = await client.PostAsync( RESTURL, new StringContent(JsonConvert.SerializeObject(testRecording), Encoding.UTF8, "application/json"));
+                var response = await client.PostAsync( RESTURL, new StringContent(JsonConvert.SerializeObject(newSensorRecording), Encoding.UTF8, "application/json"));
             }
         }
     }

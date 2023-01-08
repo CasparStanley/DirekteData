@@ -8,13 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ModelLib;
 using System.Reflection.Metadata;
-using DirekteDataREST.Managers;
 using SensorDataReceiver.Controllers;
 using System.Runtime.CompilerServices;
 
 namespace SensorDataReceiver
 {
-    internal class SensorReceiverUDP : ReceiverStructure
+    public class SensorReceiverUDP : ReceiverStructure
     {
         public override int Port { get; set; } = 7001;
         public bool Started = false;
@@ -22,10 +21,10 @@ namespace SensorDataReceiver
 
         private static char[] SPLITTERS = { ',' };
 
+        public SensorReceiverUDP() { }
+
         public override async Task StartReceiver()
         {
-            // TODO: create a new DataSet to write to
-
             UdpClient client = new UdpClient(7001);
             IPEndPoint fromEP = new IPEndPoint(IPAddress.Loopback, Port);
             byte[] data;

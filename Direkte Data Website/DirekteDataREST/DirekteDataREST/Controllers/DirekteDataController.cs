@@ -76,16 +76,33 @@ namespace DirekteDataREST.Controllers
             return Ok(data);
         }
 
-        // POST api/<DirekteDataController>
-        [HttpPost]
+        // POST api/DirekteData/AddRecording
+        [HttpPost("AddRecording")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<DataStructure> Post(DataStructure newSensorRecording)
+        public ActionResult<DataStructure> PostRecording(DataStructure newSensorRecording)
         {
             try
             {
-                DataStructure recording = mgr.AddData(newSensorRecording);
+                DataStructure recording = mgr.AddRecording(newSensorRecording);
                 return Created(RESTURL, recording);
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // POST api/DirekteData/AddDataSet
+        [HttpPost("AddDataSet")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<DataSet> PostDataSet(DataSet newDataSet)
+        {
+            try
+            {
+                DataSet dataSet = mgr.AddDataSet(newDataSet);
+                return Created(RESTURL, dataSet);
             }
             catch (ArgumentException e)
             {

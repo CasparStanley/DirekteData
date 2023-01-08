@@ -1,4 +1,3 @@
-#https://trinket.io/library/trinkets/72d4b99d05
 from sense_hat import SenseHat
 from socket import *
 import time
@@ -10,10 +9,12 @@ HOST = "192.168.0.102"
 PORT = 7001
 DATA = "Hello World!"
 
-UPDATE_FREQUENCY = 1
+# 0.066 is 1/15th of a second, meaning it will update 15 times a second
+UPDATE_FREQUENCY = 0.066
 
 sensorTime = 0
 
+# Create a socket to use internet and UDP
 clientSocket = socket(AF_INET, SOCK_DGRAM)
 clientSocket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 clientSocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
@@ -23,6 +24,7 @@ clientSocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 # Test message at the beginning:
 clientSocket.sendto(DATA.encode(), (HOST, PORT))
 
+# This update function runs with the speed of the UPDATE_FREQUENCY
 def update(t):
   sensorTime = t
 
@@ -35,6 +37,7 @@ def update(t):
   
   DATA = ("{0},{1},{2},{3}".format(sensorTime, pitch, roll, yaw))
   
+  # Finally, broadcast the data on the port
   clientSocket.sendto(DATA.encode(), (HOST, PORT))
 
 # Initial screen update
@@ -46,3 +49,5 @@ while True:
     sensorTime += UPDATE_FREQUENCY
 
     time.sleep(UPDATE_FREQUENCY)
+
+

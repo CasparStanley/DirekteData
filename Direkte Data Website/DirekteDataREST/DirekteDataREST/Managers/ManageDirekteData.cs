@@ -18,11 +18,9 @@ namespace DirekteDataREST.Managers
             new DataStructure(4, "0,15,0")
         };
 
-        public ManageDirekteData()
-        {
-        }
+        public ManageDirekteData() { }
 
-        public DataStructure AddData(DataStructure data)
+        public DataStructure AddRecording(DataStructure data)
         {
             _mockRecordings.Add(data);
             return data;
@@ -81,7 +79,7 @@ namespace DirekteDataREST.Managers
 
                 DataStructure dataObj = new DataStructure(fakeTime, fakeRotation);
 
-                AddData(dataObj);
+                AddRecording(dataObj);
 
                 Thread.Sleep(updateFrequency * 1000);
             }
@@ -90,6 +88,11 @@ namespace DirekteDataREST.Managers
         public override string ToString()
         {
             return $"Manage direkte data";
+        }
+
+        public DataSet AddDataSet(DataSet newDataSet)
+        {
+            throw new NotImplementedException();
         }
     }
 }

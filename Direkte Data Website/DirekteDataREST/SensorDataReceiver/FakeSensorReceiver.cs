@@ -1,6 +1,4 @@
-﻿using DirekteDataREST.Controllers;
-using DirekteDataREST.Managers;
-using ModelLib;
+﻿using ModelLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +20,7 @@ namespace SensorDataReceiver
 
         public override async Task StartReceiver()
         {
-            IManageDirekteData mgr = ManageDirekteData.Instance;
+            //IManageDirekteData mgr = ManageDirekteData.Instance;
 
             while (running)
             {
@@ -40,7 +38,7 @@ namespace SensorDataReceiver
 
                 DataStructure dataObj = new DataStructure(fakeTime, fakeRotation);
 
-                mgr.AddData(dataObj);
+                //mgr.AddData(dataObj);
 
                 Thread.Sleep(updateFrequency * 1000);
             }

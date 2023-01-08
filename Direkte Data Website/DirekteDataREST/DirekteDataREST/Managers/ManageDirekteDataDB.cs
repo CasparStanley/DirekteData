@@ -1,38 +1,21 @@
 ﻿using ModelLib;
+using System.Diagnostics;
 using System.Xml.Linq;
+using DirekteDataREST.SensorReceiver;
 
 namespace DirekteDataREST.Managers
 {
     public class ManageDirekteDataDB : IManageDirekteData
     {
-        // Laver manageren til en singleton så den kan refereres i andre dele af programmet, specifikt Sensor Receiver
-        
         private readonly DirekteDataContext _context;
 
         public ManageDirekteDataDB(DirekteDataContext context)
         {
             _context = context;
         }
-
-        public DataStructure AddData(DataStructure data)
-        {
-            _context.Recordings.Add(data);
-            _context.SaveChanges();
-            return data;
-        }
-
-        public void DeleteItem(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GenerateFakeSensorData()
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<DataStructure> GetAll()
         {
+            StartSensorReceiver();
             return _context.Recordings.ToList();
         }
 
@@ -78,12 +61,41 @@ namespace DirekteDataREST.Managers
             throw new KeyNotFoundException();
         }
 
+        public DataStructure AddRecording(DataStructure recording)
+        {
+            Debug.WriteLine("The AddRecording method has been called from the UDP receiver with data: " + recording.ToString());
+
+            _context.Recordings.Add(recording);
+            _context.SaveChanges();
+
+            return recording;
+        }
+
+        public DataSet AddDataSet(DataSet dataSet)
+        {
+            _context.DataSets.Add(dataSet);
+            _context.SaveChanges();
+            return dataSet;
+        }
+
         public void Update(DataStructure data)
         {
             DataStructure recording = GetRecordingById(data.DataSetId, data.Id);
             //_context.Entry(recording).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
             _context.Recordings.Update(recording);
             _context.SaveChanges();
+        }
+
+        public void DeleteItem(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void StartSensorReceiver()
+        {
+            //Start the UDP receiver on a new thread so it doesn't pause the program
+            Task.Run(() => SensorReceiverUDP.Instance.RunReceiver());
+            Debug.WriteLine("Sensor receiver started");
         }
 
         public override string ToString()
