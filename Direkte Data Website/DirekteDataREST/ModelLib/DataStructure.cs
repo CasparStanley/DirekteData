@@ -12,12 +12,12 @@ namespace ModelLib
         public int DataSetId { get; set; }
 
         // TODO: Make time a float
-        public int Time { get; set; }
+        public float Time { get; set; }
         public string Rotation { get; set; }
 
         public DataStructure() { Rotation = ""; }
 
-        public DataStructure(int time, string rotation, int dataSetId = 0)
+        public DataStructure(float time, string rotation, int dataSetId = 0)
         {
             Time = time;
             Rotation = rotation;

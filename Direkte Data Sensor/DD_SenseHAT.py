@@ -29,9 +29,9 @@ def update(t):
   sensorTime = t
 
   orientation = s.get_orientation()
-  pitch = round(orientation["pitch"], 0)
-  roll = round(orientation["roll"], 0)
-  yaw = round(orientation["yaw"], 0)
+  pitch = int(round(orientation["pitch"], 0))
+  roll = int(round(orientation["roll"], 0))
+  yaw = int(round(orientation["yaw"], 0))
   
   print("time: {0} - pitch: {1}, roll: {2}, yaw: {3}".format(sensorTime, pitch, roll, yaw))
   

@@ -7,6 +7,7 @@ using DirekteDataREST.Managers;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Globalization;
 
 namespace DirekteDataREST.SensorReceiver
 {
@@ -36,7 +37,7 @@ namespace DirekteDataREST.SensorReceiver
         private IPEndPoint fromEP;
         private byte[] data;
 
-        private int currentDataSetId;
+        public int SelectedDataSetId;
 
         public SensorReceiverUDP() { }
 
@@ -72,12 +73,19 @@ namespace DirekteDataREST.SensorReceiver
                     string[] datapoints = str.Split(SPLITTERS);
 
                     // The first number is the time
-                    int time = int.Parse(datapoints[0]);
+                    // Make sure that '.' is used as a decimal separator
+                    CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                    ci.NumberFormat.CurrencyDecimalSeparator = ".";
+
+                    float time = float.Parse(datapoints[0], NumberStyles.Any, ci);
+                    Debug.WriteLine("\n\nTime parsed to: " + time + "\n\n");
+
                     // The next three numbers are the rotations on the axes
                     string rotation = $"{datapoints[1]},{datapoints[2]},{datapoints[3]}";
+                    Debug.WriteLine("\n\nRotation parsed to: " + rotation + "\n\n");
 
                     // Create the new recording object with the recorded values!
-                    DataStructure newSensorRecording = new DataStructure(time, rotation, currentDataSetId);
+                    DataStructure newSensorRecording = new DataStructure(time, rotation, SelectedDataSetId);
 
                     // Convert the Recording to a json and send it as an http post request to the controller
                     var jsonDataSet = JsonConvert.SerializeObject(newSensorRecording);
@@ -92,22 +100,22 @@ namespace DirekteDataREST.SensorReceiver
             }
         }
 
-        private async void ReceiverStartup()
+        private void ReceiverStartup()
         {
-            // Since this recording has just started, create a new DataSet that we can link these recordings to
-            string dataSetName = $"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}";
-            string dataSetDesc = $"This DataSet was recorded on {DateTime.Now.ToShortDateString()} at {DateTime.Now.ToShortTimeString()}";
+            //// Since this recording has just started, create a new DataSet that we can link these recordings to
+            //string dataSetName = $"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}";
+            //string dataSetDesc = $"This DataSet was recorded on {DateTime.Now.ToShortDateString()} at {DateTime.Now.ToShortTimeString()}";
 
-            // Convert the DataSet to a json and send it as an http post request to the controller
-            var jsonDataSet = JsonConvert.SerializeObject(new DataSet(dataSetName, dataSetDesc, new List<DataStructure>()));
-            HttpResponseMessage response = await SendHttpPostRequest(jsonDataSet, POST_DATASET);
-            Debug.WriteLine("\n\n" + response + "\n\n");
-            Debug.WriteLine("\n\n" + response.Content.ReadAsStringAsync().Result + "\n\n");
+            //// Convert the DataSet to a json and send it as an http post request to the controller
+            //var jsonDataSet = JsonConvert.SerializeObject(new DataSet(dataSetName, dataSetDesc, new List<DataStructure>()));
+            //HttpResponseMessage response = await SendHttpPostRequest(jsonDataSet, POST_DATASET);
+            //Debug.WriteLine("\n\n" + response + "\n\n");
+            //Debug.WriteLine("\n\n" + response.Content.ReadAsStringAsync().Result + "\n\n");
 
-            DataSet createdDataSet = JsonConvert.DeserializeObject<DataSet>(response.Content.ReadAsStringAsync().Result);
-            currentDataSetId = GetDataSet(createdDataSet.Name).Id;
+            //DataSet createdDataSet = JsonConvert.DeserializeObject<DataSet>(response.Content.ReadAsStringAsync().Result);
+            //SelectedDataSetId = GetDataSet(createdDataSet.Name).Id;
 
-            Debug.WriteLine("\n\n" + createdDataSet.Name + "\n\n");
+            //Debug.WriteLine("\n\nDataSet " + SelectedDataSetId + ") " + createdDataSet.Name + " was created\n\n");
 
             Running = true;
 
