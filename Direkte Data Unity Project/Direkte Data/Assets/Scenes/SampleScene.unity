@@ -1305,52 +1305,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 884.78564}
   m_Pivot: {x: 0, y: 1}
---- !u!1 &1390856374
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1390856375}
-  - component: {fileID: 1390856376}
-  m_Layer: 0
-  m_Name: UDP_Receiver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1390856375
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1390856374}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1870156020}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1390856376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1390856374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca9d1b35b6b890c4ba59aef294cc35c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DoDebug: 0
-  Running: 0
-  dataSaver: {fileID: 1870156022}
 --- !u!1 &1618698044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,8 +1457,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b5d49c47a9b3d48885381684a181c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataSaver: {fileID: 1870156022}
+  animationDone: 1
+  dataHandler: {fileID: 0}
   loadDataType: 2
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1870156019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1514,6 +1475,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1870156020}
+  - component: {fileID: 1870156023}
   - component: {fileID: 1870156021}
   - component: {fileID: 1870156022}
   m_Layer: 0
@@ -1533,8 +1495,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 210.77989, y: 192.10585, z: -94.67731}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1390856375}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1558,7 +1519,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1658322155}
-        m_MethodName: StartMoving
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1580,11 +1541,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415d08cf5e3316c48a5f9024db3eb0a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _main: {fileID: 1870156023}
+  _direkteDataSO: {fileID: 11400000, guid: a4049fa0a7b1b964caa8eb872462e50c, type: 2}
   CurrentDataSet:
     Name: 
     Description: 
     Recordings: []
-  _direkteDataSO: {fileID: 11400000, guid: a4049fa0a7b1b964caa8eb872462e50c, type: 2}
+  LatestRecording:
+    DataSetId: 0
+    Time: 0
+    Rotation: {x: 0, y: 0, z: 0}
+--- !u!114 &1870156023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870156019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83423a8e218ada94ca528a3e3bbc6b28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToHandle: {fileID: 1658322155}
+  UpdateTime: 0.066
+  dataHandler: {fileID: 1870156022}
 --- !u!1 &1892050929
 GameObject:
   m_ObjectHideFlags: 0

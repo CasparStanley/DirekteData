@@ -52,7 +52,7 @@ public class DirekteData_GetJsonData : MonoBehaviour
         // TODO: Add functionality to get specific dataset ("/api/DirekteData/1" for eksempel)
 
         // Request the JSON file from the website
-        UnityWebRequest WWW = UnityWebRequest.Get("https://direktedatarest2022.azurewebsites.net/api/DirekteData");
+        UnityWebRequest WWW = UnityWebRequest.Get("https://direktedatarest2022.azurewebsites.net/api/DirekteData/live");
 
         // Wait for the request to return
         yield return WWW.SendWebRequest();

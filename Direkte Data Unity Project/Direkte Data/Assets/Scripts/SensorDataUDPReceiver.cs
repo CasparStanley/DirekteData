@@ -16,7 +16,8 @@ public class SensorDataUDPReceiver : MonoBehaviour
     public bool DoDebug = false;
     public bool Running = false;
 
-    [SerializeField] private Direkte_DataSaver dataSaver;
+    [SerializeField] private Main _main;
+    [SerializeField] private Direkte_DataSaver dataHandler;
 
     private readonly Queue<string> incomingQueue = new Queue<string>();
     static readonly object lockObject = new object();
@@ -24,10 +25,6 @@ public class SensorDataUDPReceiver : MonoBehaviour
     private int _port = 7002;
     private IPEndPoint fromEP;
     private UdpClient _client;
-
-    // 20 miliseconds is 0,02 seconds
-    // we should receive data once every 0,066 seconds so let's check more often to be safe
-    private int updateTime = 20;
 
     private static char[] SPLITTERS = { ',' };
 
@@ -93,7 +90,7 @@ public class SensorDataUDPReceiver : MonoBehaviour
                         // The next three numbers are the rotations on the axes
                         string rotation = $"{datapoints[1]},{datapoints[2]},{datapoints[3]}";
 
-                        dataSaver.SaveRecording(DataLevel.Real, time, rotation);
+                        DataStructure recording = dataHandler.ParseRecordingToDataSet(time, rotation);
                     }
 
                 }
@@ -110,7 +107,7 @@ public class SensorDataUDPReceiver : MonoBehaviour
                     Debug.LogError($"Error receiving data from udp client: {e.Message}");
                 }
 
-                Thread.Sleep(updateTime);
+                Thread.Sleep((int)_main.UpdateTime*1000);
             }
         }
     }
