@@ -47,8 +47,8 @@ namespace DirekteDataREST.Managers
         {
             if (_context.DataSets.ToList().Exists(i => i.Id == id))
             {
-                // Set the selected dataset
-                LiveDataHolder.SelectedDataSetId = id;
+                // Set the selected dataset - default 1
+                //LiveDataHolder.SelectedDataSetId = id;
 
                 // Find the dataset in the database
                 DataSet? dataSet = _context.DataSets.Find(id);
@@ -96,14 +96,8 @@ namespace DirekteDataREST.Managers
 
         public DataStructure AddRecording(DataStructure recording)
         {
-            if (recording != null)
-            {
-                recording.DataSetId = LiveDataHolder.SelectedDataSetId;
-                LiveDataHolder.UpdateCurrentRecording(recording);
-            } else
-            {
-                Debug.WriteLine("The recording was null?");
-            }
+            recording.DataSetId = LiveDataHolder.SelectedDataSetId;
+            LiveDataHolder.UpdateCurrentRecording(recording);
 
             _context.Recordings.Add(recording);
             _context.SaveChanges();

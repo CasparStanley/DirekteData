@@ -37,8 +37,6 @@ namespace DirekteDataREST.SensorReceiver
         private IPEndPoint fromEP;
         private byte[] data;
 
-        public int SelectedDataSetId;
-
         public SensorReceiverUDP() { }
 
         public override async void RunReceiver()
@@ -85,7 +83,7 @@ namespace DirekteDataREST.SensorReceiver
                     Debug.WriteLine("\n\nRotation parsed to: " + rotation + "\n\n");
 
                     // Create the new recording object with the recorded values!
-                    DataStructure newSensorRecording = new DataStructure(time, rotation, SelectedDataSetId);
+                    DataStructure newSensorRecording = new DataStructure(time, rotation, LiveDataHolder.SelectedDataSetId);
 
                     // Convert the Recording to a json and send it as an http post request to the controller
                     var jsonDataSet = JsonConvert.SerializeObject(newSensorRecording);

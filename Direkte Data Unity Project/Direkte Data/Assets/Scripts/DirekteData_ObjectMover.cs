@@ -14,25 +14,41 @@ public class DirekteData_ObjectMover : MonoBehaviour
 
     [SerializeField] private AnimationCurve rotationCurve;
 
-    private List<int> timeDelays = new List<int>();
+    private List<float> timeDelays = new List<float>();
     private List<Vector3> rotations = new List<Vector3>();
 
     private float rotationTime = 0.066f;
 
     public void MoveFromDatabase()
     {
-        foreach (var data in dataHandler.GetDataSet(loadDataType).Recordings)
-        {
-            timeDelays.Add(data.Time);
-            rotations.Add(data.Rotation);
-        }
-
-        //StartCoroutine(ControlMovement());
+        StartCoroutine(WaitABitThenStart());
     }
 
     public void MoveLive(DataStructure recording)
     {
         RotateSmooth(gameObject.transform, recording.Rotation, rotationTime, rotationCurve);
+    }
+
+    private IEnumerator ControlMovement()
+    {
+        Debug.Log("Controlling movement... recordings: " + dataHandler.GetDataSet(loadDataType).Recordings.Count);
+
+        for (int i = 0; i < dataHandler.GetDataSet(loadDataType).Recordings.Count; i++)
+        {
+            Debug.Log(i + "/" + dataHandler.GetDataSet(loadDataType).Recordings.Count);
+
+            // Wait for the difference between the current "time" and the previous "time"
+            if (i == 0)
+            {
+                yield return new WaitForSeconds(timeDelays[i]);
+            }
+            else
+            {
+                yield return new WaitForSeconds(timeDelays[i] - timeDelays[i - 1] * 10);
+            }
+
+            gameObject.transform.Rotate(rotations[i]);
+        }
     }
 
     public IEnumerator RotateSmooth(Transform objTransform, Vector3 targetRot, float duration, AnimationCurve curve, Vector3? fromRot = null)
@@ -58,25 +74,16 @@ public class DirekteData_ObjectMover : MonoBehaviour
         animationDone = true;
     }
 
-    //private IEnumerator ControlMovement()
-    //{
-    //    Debug.Log("Controlling movement... recordings: " + dataHandler.GetDataSet(loadDataType).Recordings.Count);
+    private IEnumerator WaitABitThenStart()
+    {
+        yield return new WaitForSeconds(5);
 
-    //    for (int i = 0; i < dataHandler.GetDataSet(loadDataType).Recordings.Count; i++)
-    //    {
-    //        Debug.Log(i + "/" + dataHandler.GetDataSet(loadDataType).Recordings.Count);
+        foreach (var data in dataHandler.GetDataSet(loadDataType).Recordings)
+        {
+            timeDelays.Add(data.Time);
+            rotations.Add(data.Rotation);
+        }
 
-    //        // Wait for the difference between the current "time" and the previous "time"
-    //        if (i == 0)
-    //        {
-    //            yield return new WaitForSeconds(timeDelays[i]);
-    //        }
-    //        else
-    //        {
-    //            yield return new WaitForSeconds(timeDelays[i] - timeDelays[i - 1]);
-    //        }
-
-    //        gameObject.transform.Rotate(rotations[i]);
-    //    }
-    //}
+        StartCoroutine(ControlMovement());
+    }
 }

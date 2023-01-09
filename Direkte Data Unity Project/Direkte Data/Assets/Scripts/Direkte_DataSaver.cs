@@ -13,7 +13,7 @@ public class Direkte_DataSaver : MonoBehaviour
     [SerializeField] private Main _main;
     [SerializeField] private DirekteData_DataSO _direkteDataSO;
 
-    [HideInInspector] public DataSet CurrentDataSet;
+    public DataSet CurrentDataSet;
 
     private DataSet _direkteDataMockJSON = new DataSet(0, $"Mock JSON Data Set", "", new List<DataStructure>());
     private DataSet _direkteDataReal = new DataSet(0, $"Direkte Data Set", "", new List<DataStructure>());
@@ -40,10 +40,22 @@ public class Direkte_DataSaver : MonoBehaviour
     /// </summary>
     /// <param name="time"></param>
     /// <param name="rotation"></param>
-    public void SaveRecording(int time, string rotation, int id = 0, int dataSetId = 0)
+    public void SaveRecording(float time, string rotation, int id = 0, int dataSetId = 0)
     {
         // Save to the current dataset - by calling GetDataSet() we make sure that if it doesn't exist, a new one is created and set as the current Dataset
         AddRecordingToDataSet(ParseRecordingToDataSet(time, rotation, id, dataSetId), CurrentDataSet);
+    }
+
+    /// <summary>
+    /// Save to the current dataset
+    /// </summary>
+    /// <param name="time"></param>
+    /// <param name="rotation"></param>
+    public void SaveDataSet(DataSet dataSet)
+    {
+        // Save to the current dataset - by calling GetDataSet() we make sure that if it doesn't exist, a new one is created and set as the current Dataset
+        CurrentDataSet.Name = dataSet.Name;
+        CurrentDataSet.Description = dataSet.Description;
     }
 
     /// <summary>
@@ -51,7 +63,7 @@ public class Direkte_DataSaver : MonoBehaviour
     /// </summary>
     /// <param name="time"></param>
     /// <param name="rotation"></param>
-    public void SaveRecording(DataLevel type, int time, string rotation, int id = 0, int dataSetId = 0)
+    public void SaveRecording(DataLevel type, float time, string rotation, int id = 0, int dataSetId = 0)
     {
         Debug.Log($"DataSaver saving recording: Time={time}, Rotation={rotation}");
         SwitchCurrentDataSet(type);
@@ -70,7 +82,7 @@ public class Direkte_DataSaver : MonoBehaviour
         return CurrentDataSet;
     }
 
-    public DataStructure ParseRecordingToDataSet(int time, string rotation, int id = 0, int dataSetId = 0)
+    public DataStructure ParseRecordingToDataSet(float time, string rotation, int id = 0, int dataSetId = 0)
     {
         float rotX, rotY, rotZ;
         try

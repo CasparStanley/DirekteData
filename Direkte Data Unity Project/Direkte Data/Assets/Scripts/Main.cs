@@ -14,7 +14,8 @@ public class Main : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(MoveObject());
+        //StartCoroutine(MoveObject());
+        ObjectToHandle.MoveFromDatabase();
     }
 
     public IEnumerator MoveObject()
