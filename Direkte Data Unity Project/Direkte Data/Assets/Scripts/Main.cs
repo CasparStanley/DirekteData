@@ -8,14 +8,14 @@ public class Main : MonoBehaviour
 
     // 20 miliseconds is 0,02 seconds
     // we should receive data once every 0,066 seconds so let's check more often to be safe
-    public float UpdateTime = 0.02f;
+    public float UpdateTime = 0.3f;
 
     [SerializeField] private Direkte_DataSaver dataHandler;
 
     private void Start()
     {
-        //StartCoroutine(MoveObject());
-        ObjectToHandle.MoveFromDatabase();
+        StartCoroutine(MoveObject());
+        //ObjectToHandle.MoveFromDatabase();
     }
 
     public IEnumerator MoveObject()
@@ -24,7 +24,7 @@ public class Main : MonoBehaviour
         {
             DataStructure recording = dataHandler.LatestRecording;
 
-            Debug.Log($"Moving object: x={recording.Rotation.x}, y={recording.Rotation.y}, z={recording.Rotation.z}");
+            //Debug.Log($"Moving object: x={recording.Rotation.x}, y={recording.Rotation.y}, z={recording.Rotation.z}");
 
             ObjectToHandle.MoveLive(recording);
 

@@ -18,6 +18,12 @@ public class DataStructure
     {
     }
 
+    public DataStructure(float time, string rotation)
+    {
+        Time = time;
+        RotationNotConverted = rotation;
+    }
+
     public DataStructure(int id, int dataSetId, float time, string rotation)
     {
         Id = id;

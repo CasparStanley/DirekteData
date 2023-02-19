@@ -5,7 +5,7 @@ import time
 s = SenseHat()
 s.low_light = True
 
-HOST = "192.168.0.102"
+HOST = "localhost"
 PORT = 7001
 DATA = "Hello World!"
 
@@ -15,7 +15,7 @@ UPDATE_FREQUENCY = 0.066
 sensorTime = 0
 
 # Create a socket to use internet and UDP
-clientSocket = socket(AF_INET, SOCK_DGRAM)
+clientSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)
 clientSocket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 clientSocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 

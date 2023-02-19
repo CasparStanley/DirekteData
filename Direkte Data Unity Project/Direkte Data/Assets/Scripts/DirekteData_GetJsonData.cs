@@ -31,16 +31,16 @@ public class DirekteData_GetJsonData : MonoBehaviour
 
     private void Start()
     {
-        UpdateData();
+        //UpdateData();
     }
 
     private void Update()
     {
         // REALLY QUITE BAD ACTUALLY, maybe just update each time a new data recording is expected?
-        if (_updateRealtime)
-        {
-            UpdateData();
-        }
+        //if (_updateRealtime)
+        //{
+        //    UpdateData();
+        //}
     }
 
     public void UpdateData()
@@ -56,6 +56,7 @@ public class DirekteData_GetJsonData : MonoBehaviour
         _dataSaver.ChooseDataSet(DataLevel.Real);
 
         // Request the JSON file from the website
+        // TODO: Not this - just get live from UDP receiver.
         UnityWebRequest WWW = UnityWebRequest.Get("https://direktedatarest2022.azurewebsites.net/api/DirekteData/1");
 
         // Wait for the request to return
