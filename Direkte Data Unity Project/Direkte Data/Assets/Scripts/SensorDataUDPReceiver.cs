@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Net;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+
 using System;
-using UnityEditor.Experimental.GraphView;
-using System.Threading.Tasks;
-using System.Net.Http;
 using System.Text;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using UnityEditor.PackageManager;
 
@@ -17,147 +14,152 @@ public class SensorDataUDPReceiver : MonoBehaviour
     public bool DoDebug = false;
     public bool Running = false;
 
+    [Header("Object Notifications")]
+    public GameObject[] notifyObjects;
+    public string methodToNotify;
+
     [Header("References")]
     [SerializeField] private Main _main;
     [SerializeField] private Direkte_DataSaver dataHandler;
 
-    [Header("Raspberry Pi Info")]
+    [Header("UDP Info")]
     [SerializeField] private string _ip = "192.168.0.104";
-    [SerializeField] private int _port = 7001;
+    [SerializeField] private int _portListen = 7001;
+    [SerializeField] private int _portSend = 8001;
 
-    [Header("Receiver Info (Unity)")]
-    [SerializeField] private int _returnPort = 8001;
+    private IPEndPoint _remoteEndPoint;
+    private UdpClient _client;
 
-    private readonly Queue<string> incomingQueue = new Queue<string>();
-    static readonly object lockObject = new object();
+    private Thread _receiveThread;
 
-    private IPEndPoint fromEP;
-    //private UdpClient _client;
+    private string received = "";
 
     private static char[] SPLITTERS = { ',' };
 
-    Thread receiveThread;
-
-    void Start()
+    public void Awake()
     {
-        StartReceiver();
+        //Check if the ip address entered is valid. If not, sendMessage will broadcast to all ip addresses 
+        IPAddress ip;
+        if (IPAddress.TryParse(_ip, out ip))
+        {
+            _remoteEndPoint = new IPEndPoint(ip, _portSend);
+
+        }
+        else
+        {
+            _remoteEndPoint = new IPEndPoint(IPAddress.Broadcast, _portSend);
+        }
+
+        //Initialize client and thread for receiving
+        _client = new UdpClient(_portListen);
+
+        _receiveThread = new Thread(new ThreadStart(ReceiveData));
+        _receiveThread.IsBackground = true;
+        _receiveThread.Start();
     }
-    public void StartReceiver()
+
+    void Update()
     {
-        //fromEP = new IPEndPoint(IPAddress.Any, 0);
-        //_client = new UdpClient(_port);
+        //Check if a message has been recibed
+        if (received != "")
+        {
+            Debug.Log("<color=cyan>UDPClient: message received \'" + received + "\'</color>");
 
-        //_client.Client.Bind(fromEP);
-
-        //Task.Run(async () => ReceivedUDPPacket());
-        ReceivedUDPPacket();
-        //StartReceiverThread();
-
-        Debug.Log("UDP - Start Receiving..");
+            //Notify each object defined in the array with the message received
+            foreach (GameObject g in notifyObjects)
+            {
+                g.SendMessage(methodToNotify, received, SendMessageOptions.DontRequireReceiver);
+            }
+            //Clear message
+            received = "";
+        }
     }
 
-    //private void StartReceiverThread()
-    //{
-    //    receiveThread = new Thread(() => ReceivedUDPPacket());
-    //    receiveThread.IsBackground = true;
-    //    Running = true;
-
-    //    if (!Running) Running = true;
-
-    //    receiveThread.Start();
-    //}
-
-    private void ReceivedUDPPacket()
+    //Call this method to send a message from this app to ipSend using portSend
+    public void SendValue(string valueToSend)
     {
-        UdpClient client = new UdpClient(_port);
-        IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
+        try
+        {
+            if (valueToSend != "")
+            {
 
-        Debug.Log("<color=yellow>Client and IpEndpoint created</color>");
+                //Get bytes from string
+                byte[] data = Encoding.UTF8.GetBytes(valueToSend);
 
-        //using (var client = new UdpClient(_port))
-        //{
+                // Send bytes to remote client
+                _client.Send(data, data.Length, _remoteEndPoint);
+                Debug.Log("<color=yellow>UDPClient: send \'" + valueToSend + "\'</color>");
+                //Clear message
+                valueToSend = "";
+
+            }
+        }
+        catch (Exception err)
+        {
+            Debug.LogError("Error udp send : " + err.Message);
+        }
+    }
+
+    //This method checks if the app receives any message
+    public void ReceiveData()
+    {
         while (true)
         {
-            // Modtag data
             try
             {
-                Debug.Log("<color=yellow>Getting ready to receive from client</color>");
+                Debug.Log("<color=lightgray>Waiting to receive data</color>");
 
-                //client.Connect(RemoteIpEndPoint);
-                //var udpReceiveResult = await client.ReceiveAsync();
-                Byte[] udpReceiveResult = client.Receive(ref RemoteIpEndPoint);
-                //string str = Encoding.UTF8.GetString(udpReceiveResult.Buffer);
-                string str = Encoding.UTF8.GetString(udpReceiveResult);
+                // Bytes received
+                IPEndPoint anyIP = new IPEndPoint(IPAddress.Any, 0);
+                var data = _client.Receive(ref anyIP);
 
-                Debug.Log("<color=yellow>RECEIVING FROM RASPBERRY PI!</color>");
-                Debug.Log($"<color=orange>DATAPOINTS: {str}</color>");
+                Debug.Log($"<color=cyan>Received data!</color>");
 
-                //string str = Encoding.UTF8.GetString(data);
+                // Bytes into text
+                string text = "";
+                text = Encoding.UTF8.GetString(data);
 
-                lock (lockObject)
-                {
+                Debug.Log($"<color=cyan>Data parsed to text: {text}</color>");
 
-                    // Ignore the message if it's just the Hello World! one :)
-                    if (str == "Hello World!")
-                    { continue; }
-
-                    // Expected format is "0,0,0,0"
-                    string[] datapoints = str.Split(SPLITTERS);
-
-                    // The first number is the time
-                    int time = int.Parse(datapoints[0]);
-
-                    // The next three numbers are the rotations on the axes
-                    string rotation = $"{datapoints[1]},{datapoints[2]},{datapoints[3]}";
-
-                    DataStructure recording = dataHandler.ParseRecordingToDataSet(time, rotation);
-                }
-
+                OkNowParse(text);
+                received = text;
             }
-            catch (SocketException e)
+            catch (Exception err)
             {
-                // 10004 thrown when socket is closed
-                if (e.ErrorCode != 10004)
-                {
-                    Debug.LogError("Socket exception while receiving data from udp client: " + e.Message);
-                }
+                Debug.Log("Error:" + err.ToString());
             }
-            catch (Exception e)
-            {
-                Debug.LogError($"Error receiving data from udp client: {e.Message}");
-            }
-
-            Thread.Sleep((int)_main.UpdateTime*1000);
         }
-        //}
     }
 
-    //private void OnDestroy()
-    //{
-    //    Debug.Log("Sensor Data UDP Receiver was destroyed, shutting down client");
-    //    Stop();
-    //}
+    private void OkNowParse(string rawText)
+    {
+        // Ignore the message if it's just the Hello World! one :)
+        if (rawText == "Hello World!")
+        { return; }
 
-    //public void Stop()
-    //{
-    //    if (_client != null)
-    //    {
-    //        _client.Close();
-    //        _client = null;
-    //    }
-    //    if (receiveThread!= null) 
-    //    { 
-    //        if (receiveThread.Join(100))
-    //        {
-    //            Debug.Log("UDP thread has terminated successfully");
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("UDP thread did not terminate within 100ms, forcefully aborting");
-    //            receiveThread.Abort();
-    //        }
+        // Expected format is "0,0,0,0"
+        string[] datapoints = rawText.Split(SPLITTERS);
 
-    //        Running = false;
-    //    }
-    //}
+        // The first number is the time
+        int time = int.Parse(datapoints[0]);
+
+        // The next three numbers are the rotations on the axes
+        string rotation = $"{datapoints[1]},{datapoints[2]},{datapoints[3]}";
+
+        DataStructure recording = dataHandler.ParseRecordingToDataSet(time, rotation);
+
+        Thread.Sleep((int)_main.UpdateTime*1000);
+    }
+
+    //Exit UDP client
+    public void OnDisable()
+    {
+        if (_receiveThread != null)
+        {
+            _receiveThread.Abort();
+            _receiveThread = null;
+        }
+        _client.Close();
+        Debug.Log("<color=red>UDPClient: exit</color>");
+    }
 }

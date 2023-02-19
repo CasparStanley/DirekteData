@@ -103,7 +103,7 @@ public class Direkte_DataSaver : MonoBehaviour
         // Add the data to the selected dataset
         DataStructure recording = new DataStructure(id, dataSetId, time, newRot);
 
-        Debug.Log("New recording added! " + recording.ToString());
+        Debug.Log("<color=cyan>New recording added! " + recording.ToString() + "</color>");
 
         LatestRecording = recording;
         return recording;

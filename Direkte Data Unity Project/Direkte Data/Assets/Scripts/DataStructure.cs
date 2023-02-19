@@ -42,6 +42,6 @@ public class DataStructure
 
     public override string ToString()
     {
-        return $"{{{nameof(Id)}={Id.ToString()}, {nameof(DataSetId)}={DataSetId.ToString()}, {nameof(Time)}={Time.ToString()}, {nameof(Rotation)}={Rotation}}}";
+        return $"{nameof(Id)}: {Id.ToString()}, {nameof(DataSetId)}: {DataSetId.ToString()}, {nameof(Time)} = {Time.ToString()}, {nameof(Rotation)} = {Rotation}";
     }
 }

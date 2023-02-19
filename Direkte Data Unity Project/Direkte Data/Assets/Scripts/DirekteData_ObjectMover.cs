@@ -9,7 +9,11 @@ public class DirekteData_ObjectMover : MonoBehaviour
 {
     [HideInInspector] public bool animationDone = true;
 
+    [Header("References")]
     [SerializeField] private Direkte_DataSaver dataHandler;
+
+    [Header("Settings")]
+    [SerializeField] private bool rotateSmooth;
     [SerializeField] private DataLevel loadDataType;
 
     [SerializeField] private AnimationCurve rotationCurve;
@@ -17,7 +21,7 @@ public class DirekteData_ObjectMover : MonoBehaviour
     private List<float> timeDelays = new List<float>();
     private List<Vector3> rotations = new List<Vector3>();
 
-    private float rotationTime = 0.066f;
+    [HideInInspector] public float rotationTime = 0.03f;
 
     public void MoveFromDatabase()
     {
@@ -26,7 +30,15 @@ public class DirekteData_ObjectMover : MonoBehaviour
 
     public void MoveLive(DataStructure recording)
     {
-        RotateSmooth(gameObject.transform, recording.Rotation, rotationTime, rotationCurve);
+        if (rotateSmooth)
+        {
+            rotationTime *= 5;
+            StartCoroutine(RotateSmooth(gameObject.transform, recording.Rotation, rotationTime, rotationCurve));
+        }
+        else
+        {
+            gameObject.transform.rotation = Quaternion.Euler(recording.Rotation);
+        }
     }
 
     private IEnumerator ControlMovement()

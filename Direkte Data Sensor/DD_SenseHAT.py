@@ -5,7 +5,7 @@ import time
 s = SenseHat()
 s.low_light = True
 
-HOST = "localhost"
+HOST = "192.168.0.102"
 PORT = 7001
 DATA = "Hello World!"
 
@@ -26,7 +26,7 @@ clientSocket.sendto(DATA.encode(), (HOST, PORT))
 
 # This update function runs with the speed of the UPDATE_FREQUENCY
 def update(t):
-  sensorTime = t
+  sensorTime = int(round(t, 0))
 
   orientation = s.get_orientation()
   pitch = int(round(orientation["pitch"], 0))
