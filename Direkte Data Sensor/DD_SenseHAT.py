@@ -15,7 +15,7 @@ UPDATE_FREQUENCY = 0.066
 sensorTime = 0
 
 # Create a socket to use internet and UDP
-clientSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)
+clientSocket = socket(AF_INET, SOCK_DGRAM)
 clientSocket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
 clientSocket.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
