@@ -43,11 +43,12 @@ public class SensorDataUDPReceiver : MonoBehaviour
         if (IPAddress.TryParse(_ip, out ip))
         {
             _remoteEndPoint = new IPEndPoint(ip, _portSend);
-
+            Debug.Log("Valid ip");
         }
         else
         {
             _remoteEndPoint = new IPEndPoint(IPAddress.Broadcast, _portSend);
+            Debug.Log("Invalid ip, broadcasting");
         }
 
         //Initialize client and thread for receiving
@@ -107,7 +108,7 @@ public class SensorDataUDPReceiver : MonoBehaviour
         {
             try
             {
-                Debug.Log("<color=lightgray>Waiting to receive data</color>");
+                Debug.Log($"<color=lightgray>Waiting to receive data</color>");
 
                 // Bytes received
                 IPEndPoint anyIP = new IPEndPoint(IPAddress.Any, 0);

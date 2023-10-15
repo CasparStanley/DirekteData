@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8101656452784543624
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Engine Exhaust RP1 Orange
+  m_Shader: {fileID: -6465566751694194690, guid: 81703c4378cf20c44986fdc9c598f4ff,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - SHADOWCASTER
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - EngEx_BotGradient_Amount: 1
+    - EngEx_BotGradient_Pwr: 1
+    - EngEx_DistortionAmount: 0.2
+    - EngEx_Height: 2
+    - EngEx_NoiseScale: 25
+    - EngEx_TopGradient_Amount: 0.6
+    - EngEx_Width: 0.5
+    - Exh_HiAtmosToVacuum: 0
+    - Exh_HiAtmostToVacuum: 0
+    - Exh_Startup: 0
+    - Exh_SurfaceToHiAtmos: 0
+    - Exh_SurfaceToVac: 0
+    - Vector1_1CEBF041: 0
+    - Vector1_3C5DE5DF: 0
+    - Vector1_9436B48B: 0
+    - Vector1_9DD08DEB: 0
+    - _AlphaClip: 0
+    - _Blend: 2
+    - _BumpScale: 1
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 1
+    - _EmissionScaleUI: 0
+    - _EnvironmentReflections: 1
+    - _GlossMapScale: 0
+    - _Glossiness: 0
+    - _GlossinessSource: 0
+    - _GlossyReflections: 0
+    - _InvFade: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Outline: 1.5
+    - _Parallax: 0.02
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _Shininess: 0
+    - _Smoothness: 0.5
+    - _SmoothnessSource: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecSource: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 5
+    - _Surface: 1
+    - _UVSec: 0
+    - _WorkflowMode: 1
+    - _ZWrite: 0
+    m_Colors:
+    - Color_1DF166F7: {r: 1, g: 1, b: 1, a: 0}
+    - Color_2377AC6E: {r: 0.37495124, g: 0.4068187, b: 0.47223082, a: 0}
+    - Color_2ED9864D: {r: 0, g: 0, b: 0, a: 0}
+    - Color_3199086B: {r: 8.784314, g: 47.937256, b: 7.529412, a: 0}
+    - Color_41EE362F: {r: 0.05, g: 0.05, b: 0.05, a: 0}
+    - Color_41FCAD14: {r: 3.372549, g: 0.4392157, b: 0.4392157, a: 0}
+    - Color_739EB258: {r: 12.732985, g: 8.333105, b: 3.9332256, a: 0}
+    - Color_8BE323D1: {r: 8.866937, g: 2.2747638, b: 1.9497976, a: 0}
+    - Color_9A14CEB8: {r: 0.8039216, g: 0.14310648, b: 0.054717176, a: 0}
+    - Color_E73E50F3: {r: 3.396226, g: 0.7826648, b: 0.2082593, a: 0}
+    - EngEx_BotGradient_Pos: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - EngEx_NoiseSpeed: {r: 0, g: 4, b: 0, a: 0}
+    - EngEx_TopGradient_Pos: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - Exh_Color1_SL: {r: 8, g: 4.67555, b: 1.7040005, a: 0}
+    - Exh_Color2_SL: {r: 4.4334683, g: 1.4320325, b: 0.97489864, a: 0}
+    - Exh_Color3_VA: {r: 1.0592737, g: 0.23847523, b: 0.0776431, a: 0}
+    - Exh_Color4_VA: {r: 1.4980392, g: 0.16470589, b: 0.16470589, a: 0}
+    - Exh_Color_HiAtmos1: {r: 3.396226, g: 0.7826648, b: 0.2082593, a: 0}
+    - Exh_Color_HiAtmos2: {r: 3.372549, g: 0.4392157, b: 0.4392157, a: 0}
+    - Exh_Color_SL1: {r: 6.078299, g: 3.064367, b: 1.018354, a: 0}
+    - Exh_Color_SL2: {r: 4.433468, g: 1.133193, b: 0.9516869, a: 0}
+    - Exh_Color_Startup1: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 0}
+    - Exh_Color_Startup2: {r: 1, g: 1, b: 1, a: 0}
+    - Exh_Color_Vac1: {r: 0.099, g: 0.0519915, b: 0.047718, a: 0}
+    - Exh_Color_Vac2: {r: 0.07769633, g: 0.07769633, b: 0.07769633, a: 0}
+    - Vector2_EBCABF73: {r: 10, g: 3, b: 0, a: 0}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColorUI: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 1, g: 0.5, b: 0, a: 1}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

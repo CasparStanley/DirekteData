@@ -95,7 +95,7 @@ public class UDPClient : MonoBehaviour
 		while (true) {
 
 			try {
-                Debug.Log("Waiting to receive data");
+                Debug.Log($"{gameObject.name}: Waiting to receive data");
 
                 // Bytes received
                 IPEndPoint anyIP = new IPEndPoint (IPAddress.Any, 0);
