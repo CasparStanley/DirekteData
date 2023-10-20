@@ -3,7 +3,7 @@ using UnityEditor;
 
 //Original version of the ConditionalEnumHideAttribute created by Brecht Lecluyse (www.brechtos.com)
 //Modified by: -
-
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(ConditionalEnumHideAttribute))]
 public class ConditionalEnumHidePropertyDrawer : PropertyDrawer
 {
@@ -76,3 +76,4 @@ public class ConditionalEnumHidePropertyDrawer : PropertyDrawer
     }
 
 }
+#endif

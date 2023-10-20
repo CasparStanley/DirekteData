@@ -22,7 +22,9 @@ public class ExhaustController : MonoBehaviour
     [Space(5)]
     
     [SerializeField] private bool useAnimationCurve = true;
+    #if UNITY_EDITOR
     [ConditionalHide("useAnimationCurve", true)]
+    #endif
     [SerializeField] private AnimationCurve nozzleExitGlowCurve;
 
     [HideInInspector] public float startupTime;

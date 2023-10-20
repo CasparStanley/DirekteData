@@ -6,7 +6,9 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+#if UNITY_EDITOR
 using UnityEditor.PackageManager;
+#endif
 
 public class SensorDataUDPReceiver : MonoBehaviour
 {

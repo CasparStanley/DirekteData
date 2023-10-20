@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Rutherford_Test-Stand.unity
+    guid: a8283adb66c885e45a5ab8e2056a3380
   m_configObjects: {}
